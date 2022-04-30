@@ -1,0 +1,309 @@
+{
+    "nodes": {
+        "boost": [
+            {
+                "level": "1",
+                "need": "2",
+                "max": "110",
+                "shards": "10"
+            },
+            {
+                "level": "2",
+                "need": "1",
+                "max": "108",
+                "shards": "21"
+            },
+            {
+                "level": "3",
+                "need": "2",
+                "max": "107",
+                "shards": "35"
+            },
+            {
+                "level": "4",
+                "need": "2",
+                "max": "105",
+                "shards": "52"
+            },
+            {
+                "level": "5",
+                "need": "2",
+                "max": "103",
+                "shards": "72"
+            },
+            {
+                "level": "6",
+                "need": "3",
+                "max": "101",
+                "shards": "95"
+            },
+            {
+                "level": "7",
+                "need": "2",
+                "max": "98",
+                "shards": "121"
+            },
+            {
+                "level": "8",
+                "need": "4",
+                "max": "96",
+                "shards": "150"
+            },
+            {
+                "level": "9",
+                "need": "3",
+                "max": "192",
+                "shards": "182"
+            },
+            {
+                "level": "10",
+                "need": "4",
+                "max": "89",
+                "shards": "217"
+            },
+            {
+                "level": "11",
+                "need": "4",
+                "max": "85",
+                "shards": "255"
+            },
+            {
+                "level": "12",
+                "need": "4",
+                "max": "81",
+                "shards": "296"
+            },
+            {
+                "level": "13",
+                "need": "5",
+                "max": "77",
+                "shards": "340"
+            },
+            {
+                "level": "14",
+                "need": "5",
+                "max": "72",
+                "shards": "387"
+            },
+            {
+                "level": "15",
+                "need": "5",
+                "max": "67",
+                "shards": "437"
+            },
+            {
+                "level": "16",
+                "need": "5",
+                "max": "62",
+                "shards": "490"
+            },
+            {
+                "level": "17",
+                "need": "6",
+                "max": "56",
+                "shards": "546"
+            },
+            {
+                "level": "18",
+                "need": "6",
+                "max": "50",
+                "shards": "605"
+            },
+            {
+                "level": "19",
+                "need": "7",
+                "max": "44",
+                "shards": "667"
+            },
+            {
+                "level": "20",
+                "need": "6",
+                "max": "37",
+                "shards": "732"
+            },
+            {
+                "level": "21",
+                "need": "8",
+                "max": "31",
+                "shards": "800"
+            },
+            {
+                "level": "22",
+                "need": "7",
+                "max": "23",
+                "shards": "871"
+            },
+            {
+                "level": "23",
+                "need": "8",
+                "max": "16",
+                "shards": "945"
+            },
+            {
+                "level": "24",
+                "need": "8",
+                "max": "8",
+                "shards": "1022"
+            },
+            {
+                "level": "25",
+                "need": "0",
+                "max": "0",
+                "shards": "1102"
+            }
+        ],
+        "skill": [
+            {
+                "level": "1",
+                "need": "2",
+                "max": "110",
+                "shards": "40"
+            },
+            {
+                "level": "2",
+                "need": "1",
+                "max": "108",
+                "shards": "84"
+            },
+            {
+                "level": "3",
+                "need": "2",
+                "max": "107",
+                "shards": "132"
+            },
+            {
+                "level": "4",
+                "need": "2",
+                "max": "105",
+                "shards": "184"
+            },
+            {
+                "level": "5",
+                "need": "2",
+                "max": "103",
+                "shards": "240"
+            },
+            {
+                "level": "6",
+                "need": "3",
+                "max": "101",
+                "shards": "300"
+            },
+            {
+                "level": "7",
+                "need": "2",
+                "max": "98",
+                "shards": "364"
+            },
+            {
+                "level": "8",
+                "need": "4",
+                "max": "96",
+                "shards": "432"
+            },
+            {
+                "level": "9",
+                "need": "3",
+                "max": "92",
+                "shards": "504"
+            },
+            {
+                "level": "10",
+                "need": "4",
+                "max": "89",
+                "shards": "580"
+            },
+            {
+                "level": "11",
+                "need": "4",
+                "max": "85",
+                "shards": "660"
+            },
+            {
+                "level": "12",
+                "need": "4",
+                "max": "81",
+                "shards": "744"
+            },
+            {
+                "level": "13",
+                "need": "5",
+                "max": "77",
+                "shards": "832"
+            },
+            {
+                "level": "14",
+                "need": "5",
+                "max": "72",
+                "shards": "924"
+            },
+            {
+                "level": "15",
+                "need": "5",
+                "max": "67",
+                "shards": "1020"
+            },
+            {
+                "level": "16",
+                "need": "6",
+                "max": "62",
+                "shards": "1120"
+            },
+            {
+                "level": "17",
+                "need": "6",
+                "max": "56",
+                "shards": "1224"
+            },
+            {
+                "level": "18",
+                "need": "6",
+                "max": "50",
+                "shards": "1332"
+            },
+            {
+                "level": "19",
+                "need": "7",
+                "max": "44",
+                "shards": "1444"
+            },
+            {
+                "level": "20",
+                "need": "6",
+                "max": "37",
+                "shards": "1560"
+            },
+            {
+                "level": "21",
+                "need": "7",
+                "max": "31",
+                "shards": "1680"
+            },
+            {
+                "level": "22",
+                "need": "7",
+                "max": "23",
+                "shards": "1804"
+            },
+            {
+                "level": "23",
+                "need": "8",
+                "max": "16",
+                "shards": "1932"
+            },
+            {
+                "level": "24",
+                "need": "8",
+                "max": "8",
+                "shards": "2064"
+            },
+            {
+                "level": "25",
+                "need": "0",
+                "max": "0",
+                "shards": "2200"
+            }
+        ]
+    }
+}
+

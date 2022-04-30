@@ -1,0 +1,25 @@
+{
+  "name": "TeleBot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "http": "0.0.1-security",
+    "mongoose": "^5.13.7",
+    "nedb": "^1.8.0",
+    "node-telegram-bot-api": "^0.54.0",
+    "nodemon": "^2.0.12",
+    "puppeteer": "^10.2.0",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6"
+  }
+}

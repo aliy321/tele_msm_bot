@@ -1,0 +1,340 @@
+[
+    {
+        "name": "Invincible Belief (Dark Knight, Hero, Paladin)",
+        "skill": [
+            {
+                "name": "1",
+                "stats": "1.0% BOSS ATK, 1.0% BOSS DEF"
+            },
+            {
+                "name": "2",
+                "stats": "2.0% BOSS ATK, 2.0% BOSS DEF"
+            },
+            {
+                "name": "3",
+                "stats": "3.0% BOSS ATK, 3.0% BOSS DEF"
+            },
+            {
+                "name": "4",
+                "stats": "4.0% BOSS ATK, 4.0% BOSS DEF"
+            },
+            {
+                "name": "5",
+                "stats": "5.0% BOSS ATK, 5.0% BOSS DEF"
+            },
+            {
+                "name": "6",
+                "stats": "6.0% BOSS ATK, 6.0% BOSS DEF"
+            }
+        ]
+    },
+    {
+        "name": "Thief Cunning (Night Lord, Shadower)",
+        "skill": [
+            {
+                "name": "1",
+                "stats": "1.0% PHY ATK, 0.5% EVD INC"
+            },
+            {
+                "name": "2",
+                "stats": "2.0% PHY ATK, 1.0% EVD INC"
+            },
+            {
+                "name": "3",
+                "stats": "3.0% PHY ATK, 1.5% EVD INC"
+            },
+            {
+                "name": "4",
+                "stats": "4.0% PHY ATK, 2.0% EVD INC"
+            }
+        ]
+    },
+    {
+        "name": "Spirit Of Freedom (Mechanic, Wild Hunter, Battle Mage)",
+        "skill": [
+            {
+                "name": "1",
+                "stats": "1.0% EXP INC, 1.0% ABNORM RES"
+            },
+            {
+                "name": "2",
+                "stats": "2.0% EXP INC, 2.0% ABNORM RES"
+            },
+            {
+                "name": "3",
+                "stats": "3.0% EXP INC, 3.0% ABNORM RES"
+            },
+            {
+                "name": "4",
+                "stats": "4.0% EXP INC, 4.0% ABNORM RES"
+            },
+            {
+                "name": "5",
+                "stats": "5.0% EXP INC, 5.0% ABNORM RES"
+            },
+            {
+                "name": "6",
+                "stats": "6.0% EXP INC, 6.0% ABNORM RES"
+            }
+        ]
+    },
+    {
+        "name": "Empirical Knowledge (Bishop, Ice Lightning,Fire Poison)",
+        "skill": [
+            {
+                "name": "1",
+                "stats": "1.5% MAG ATK INC, 1.0% PEXP INC"
+            },
+            {
+                "name": "2",
+                "stats": "3.0% MAG ATK INC, 2.0% PEXP INC"
+            },
+            {
+                "name": "3",
+                "stats": "4.5% MAG ATK INC, 3.0% PEXP INC"
+            },
+            {
+                "name": "4",
+                "stats": "6.0% MAG ATK INC, 4.0% PEXP INC"
+            },
+            {
+                "name": "5",
+                "stats": "7.5% MAG ATK INC, 5.0% PEXP INC"
+            },
+            {
+                "name": "6",
+                "stats": "9.0% MAG ATK INC, 6.0% PEXP INC"
+            }
+        ]
+    },
+    {
+        "name": "Adventure Curiosity (Bow Master, Marksman)",
+        "skill": [
+            {
+                "name": "1",
+                "stats": "1.0% CRIT DMG, 0.5% ACC INC"
+            },
+            {
+                "name": "2",
+                "stats": "2.0% CRIT DMG, 1.0% ACC INC"
+            },
+            {
+                "name": "3",
+                "stats": "3.0% CRIT DMG, 1.5% ACC INC"
+            },
+            {
+                "name": "4",
+                "stats": "4.0% CRIT DMG, 2% ACC INC"
+            }
+        ]
+    },
+    {
+        "name": "Pirate Blessing (Corsair, Bucc)",
+        "skill": [
+            {
+                "name": "1",
+                "stats": "0.5% FINAL DMG, 1.0% HP/MP %"
+            },
+            {
+                "name": "2",
+                "stats": "1.0% FINAL DMG, 2.0% HP/MP %"
+            },
+            {
+                "name": "3",
+                "stats": "1.5% FINAL DMG, 3.0% HP/MP %"
+            },
+            {
+                "name": "4",
+                "stats": "2.0% FINAL DMG, 4% HP/MP %"
+            }
+        ]
+    },
+    {
+        "name": "Cygnus Blessing (Dawn Warrior, Night Walker, Wind Archer, Blaze Wizard, Thunder Breaker)",
+        "skill": [
+            {
+                "name": "1",
+                "stats": "0.5% CRIT RATE, 0.5% FEVER DUR"
+            },
+            {
+                "name": "2",
+                "stats": "1.0% CRIT RATE, 1.0% FEVER DUR"
+            },
+            {
+                "name": "3",
+                "stats": "1.5% CRIT RATE, 1.5% FEVER DUR"
+            },
+            {
+                "name": "4",
+                "stats": "2.0% CRIT RATE, 2.0% FEVER DUR"
+            },
+            {
+                "name": "5",
+                "stats": "2.5% CRIT RATE, 2.5% FEVER DUR"
+            },
+            {
+                "name": "6",
+                "stats": "3.0% CRIT RATE, 3.0% FEVER DUR"
+            },
+            {
+                "name": "7",
+                "stats": "3.5% CRIT RATE, 3.5% FEVER DUR"
+            },
+            {
+                "name": "8",
+                "stats": "4.0% CRIT RATE, 4.0% FEVER DUR"
+            },
+            {
+                "name": "9",
+                "stats": "4.5% CRIT RATE, 4.5% FEVER DUR"
+            },
+            {
+                "name": "10",
+                "stats": "5.0% CRIT RATE, 5.0% FEVER DUR"
+            }
+        ]
+    },
+    {
+        "name": "Hybrid Logic (Xenon)",
+        "skill": [
+            {
+                "name": "1",
+                "stats": "2.0% FINAL DMG"
+            },
+            {
+                "name": "2",
+                "stats": "4.0% FINAL DMG"
+            }
+        ]
+    },
+    {
+        "name": "Boss Banisher (Evan)",
+        "skill": [
+            {
+                "name": "1",
+                "stats": "2.0% BOSS ATK"
+            },
+            {
+                "name": "2",
+                "stats": "4.0% BOSS ATK"
+            }
+        ]
+    },
+    {
+        "name": "Cleansing Light (Luminous)",
+        "skill": [
+            {
+                "name": "1",
+                "stats": "2.0% MAG DMG"
+            },
+            {
+                "name": "2",
+                "stats": "4.0% MAG DMG"
+            }
+        ]
+    },
+    {
+        "name": "Elven Blessing (Mercedes)",
+        "skill": [
+            {
+                "name": "1",
+                "stats": "2.0% EXP"
+            },
+            {
+                "name": "2",
+                "stats": "4.0% EXP"
+            }
+        ]
+    },
+    {
+        "name": "Fever Kill Advantage (Aran)",
+        "skill": [
+            {
+                "name": "1",
+                "stats": "2.0% FEVER CHARGE RATE"
+            },
+            {
+                "name": "2",
+                "stats": "4.0% FEVER CHARGE RATE"
+            }
+        ]
+    },
+    {
+        "name": "Livin' on the Edge (Shade)",
+        "skill": [
+            {
+                "name": "1",
+                "stats": "1.0% CHANCE NOT TO DIE"
+            },
+            {
+                "name": "2",
+                "stats": "2.0% CHANCE NOT TO DIE"
+            }
+        ]
+    },
+    {
+        "name": "Phantom Instinct (Phantom)",
+        "skill": [
+            {
+                "name": "1",
+                "stats": "2.0% CRIT DMG"
+            },
+            {
+                "name": "2",
+                "stats": "4.0% CRIT DMG"
+            }
+        ]
+    },
+    {
+        "name": "Fury Unleashed (Demon Slayer)",
+        "skill": [
+            {
+                "name": "1",
+                "stats": "2.0% BOSS ATK"
+            },
+            {
+                "name": "2",
+                "stats": "4.0% BOSS ATK"
+            }
+        ]
+    },
+    {
+        "name": "Iron Will (Kaiser)",
+        "skill": [
+            {
+                "name": "1",
+                "stats": "2.0% HP"
+            },
+            {
+                "name": "2",
+                "stats": "4.0% HP"
+            }
+        ]
+    },
+    {
+        "name": "Wild Rage (Demon Avenger)",
+        "skill": [
+            {
+                "name": "1",
+                "stats": "2.0% PHY DMG"
+            },
+            {
+                "name": "2",
+                "stats": "4.0% PHY DMG"
+            }
+        ]
+    },
+    {
+        "name": "Terms and Condition (Angelic Buster)",
+        "skill": [
+            {
+                "name": "1",
+                "stats": "2.0% MAG DMG INC"
+            },
+            {
+                "name": "2",
+                "stats": "4.0% MAG DMG INC"
+            }
+        ]
+    }
+]

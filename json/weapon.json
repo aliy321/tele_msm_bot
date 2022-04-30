@@ -1,0 +1,406 @@
+{
+    "pba": [
+        {
+            "necro": [
+                {
+                    "info_type": "Secondary Weapon",
+                    "normal": "-",
+                    "inno": "-",
+                    "emblem": "-"
+                },
+                {
+                    "info_type": "Warriors (except paladins)",
+                    "normal": "8836",
+                    "inno": "-",
+                    "emblem": "11486"
+                },
+                {
+                    "info_type": "Paladins",
+                    "normal": "8836",
+                    "inno": "-",
+                    "emblem": "11486"
+                },
+                {
+                    "info_type": "Archers",
+                    "normal": "8976",
+                    "inno": "-",
+                    "emblem": "11668"
+                },
+                {
+                    "info_type": "Thieves",
+                    "normal": "8933",
+                    "inno": "-",
+                    "emblem": "11612"
+                },
+                {
+                    "info_type": "Guns",
+                    "normal": "8975",
+                    "inno": "-",
+                    "emblem": "11667"
+                },
+                {
+                    "info_type": "Knucklers",
+                    "normal": "8933",
+                    "inno": "-",
+                    "emblem": "11612"
+                },
+                {
+                    "info_type": "Mages",
+                    "normal": "8890",
+                    "inno": "-",
+                    "emblem": "11557"
+                }
+            ],
+            "ancient": [
+                {
+                    "info_type": "Secondary Weapon",
+                    "normal": "-",
+                    "inno": "-",
+                    "emblem": "-"
+                },
+                {
+                    "info_type": "Warriors (except paladins)",
+                    "normal": "7249",
+                    "inno": "-",
+                    "emblem": "9423"
+                },
+                {
+                    "info_type": "Paladins",
+                    "normal": "7249",
+                    "inno": "-",
+                    "emblem": "9423"
+                },
+                {
+                    "info_type": "Archers",
+                    "normal": "7363",
+                    "inno": "-",
+                    "emblem": "9571"
+                },
+                {
+                    "info_type": "Thieves",
+                    "normal": "7328",
+                    "inno": "-",
+                    "emblem": "9526"
+                },
+                {
+                    "info_type": "Guns",
+                    "normal": "7362",
+                    "inno": "-",
+                    "emblem": "9570"
+                },
+                {
+                    "info_type": "Knucklers",
+                    "normal": "7328",
+                    "inno": "-",
+                    "emblem": "9526"
+                },
+                {
+                    "info_type": "Mages",
+                    "normal": "7292",
+                    "inno": "-",
+                    "emblem": "9479"
+                }
+            ],
+            "mythic": [
+                {
+                    "info_type": "Secondary Weapon",
+                    "normal": "1510",
+                    "inno": "1510",
+                    "emblem": "-"
+                },
+                {
+                    "info_type": "Warriors (except paladins)",
+                    "normal": "3787",
+                    "inno": "3787",
+                    "emblem": "4923"
+                },
+                {
+                    "info_type": "Paladins",
+                    "normal": "3849",
+                    "inno": "3788",
+                    "emblem": "5003"
+                },
+                {
+                    "info_type": "Archers",
+                    "normal": "3849",
+                    "inno": "3788",
+                    "emblem": "5003"
+                },
+                {
+                    "info_type": "Thieves",
+                    "normal": "3832",
+                    "inno": "3790",
+                    "emblem": "4981"
+                },
+                {
+                    "info_type": "Guns",
+                    "normal": "3849",
+                    "inno": "3788",
+                    "emblem": "5003"
+                },
+                {
+                    "info_type": "Knucklers",
+                    "normal": "3832",
+                    "inno": "3790",
+                    "emblem": "4981"
+                },
+                {
+                    "info_type": "Mages",
+                    "normal": "3817",
+                    "inno": "3792",
+                    "emblem": "4962"
+                }
+            ],
+            "legend": [
+                {
+                    "info_type": "Secondary Weapon",
+                    "normal": "831",
+                    "inno": "831",
+                    "emblem": "-"
+                },
+                {
+                    "info_type": "Warriors (except paladins)",
+                    "normal": "2279",
+                    "inno": "2279",
+                    "emblem": "2962"
+                },
+                {
+                    "info_type": "Paladins",
+                    "normal": "2317",
+                    "inno": "2280",
+                    "emblem": "3012"
+                },
+                {
+                    "info_type": "Archers",
+                    "normal": "2317",
+                    "inno": "2280",
+                    "emblem": "3012"
+                },
+                {
+                    "info_type": "Thieves",
+                    "normal": "2307",
+                    "inno": "2281",
+                    "emblem": "2999"
+                },
+                {
+                    "info_type": "Guns",
+                    "normal": "2317",
+                    "inno": "2280",
+                    "emblem": "3012"
+                },
+                {
+                    "info_type": "Knucklers",
+                    "normal": "2307",
+                    "inno": "2281",
+                    "emblem": "2999"
+                },
+                {
+                    "info_type": "Mages",
+                    "normal": "2298",
+                    "inno": "2282",
+                    "emblem": "2987"
+                }
+            ],
+            "unique": [
+                {
+                    "info_type": "Secondary Weapon",
+                    "normal": "502",
+                    "inno": "502",
+                    "emblem": "-"
+                },
+                {
+                    "info_type": "Warriors (except paladins)",
+                    "normal": "1316",
+                    "inno": "1316",
+                    "emblem": "1710"
+                },
+                {
+                    "info_type": "Paladins",
+                    "normal": "1338",
+                    "inno": "1317",
+                    "emblem": "1739"
+                },
+                {
+                    "info_type": "Archers",
+                    "normal": "1338",
+                    "inno": "1317",
+                    "emblem": "1739"
+                },
+                {
+                    "info_type": "Thieves",
+                    "normal": "1333",
+                    "inno": "1318",
+                    "emblem": "1732"
+                },
+                {
+                    "info_type": "Guns",
+                    "normal": "1338",
+                    "inno": "1317",
+                    "emblem": "1739"
+                },
+                {
+                    "info_type": "Knucklers",
+                    "normal": "1333",
+                    "inno": "1318",
+                    "emblem": "1732"
+                },
+                {
+                    "info_type": "Mages",
+                    "normal": "1328",
+                    "inno": "1319",
+                    "emblem": "1726"
+                }
+            ],
+            "epic": [
+                {
+                    "info_type": "Secondary Weapon",
+                    "normal": "278",
+                    "inno": "278",
+                    "emblem": "-"
+                },
+                {
+                    "info_type": "Warriors (except paladins)",
+                    "normal": "650",
+                    "inno": "650",
+                    "emblem": "-"
+                },
+                {
+                    "info_type": "Paladins",
+                    "normal": "662",
+                    "inno": "651",
+                    "emblem": "-"
+                },
+                {
+                    "info_type": "Archers",
+                    "normal": "662",
+                    "inno": "651",
+                    "emblem": "-"
+                },
+                {
+                    "info_type": "Thieves",
+                    "normal": "660",
+                    "inno": "652",
+                    "emblem": "-"
+                },
+                {
+                    "info_type": "Guns",
+                    "normal": "662",
+                    "inno": "651",
+                    "emblem": "-"
+                },
+                {
+                    "info_type": "Knucklers",
+                    "normal": "660",
+                    "inno": "652",
+                    "emblem": "-"
+                },
+                {
+                    "info_type": "Mages",
+                    "normal": "658",
+                    "inno": "653",
+                    "emblem": "-"
+                }
+            ],
+            "rare": [
+                {
+                    "info_type": "Secondary Weapon",
+                    "normal": "129",
+                    "inno": "129",
+                    "emblem": "-"
+                },
+                {
+                    "info_type": "Warriors (except paladins)",
+                    "normal": "220",
+                    "inno": "220",
+                    "emblem": "-"
+                },
+                {
+                    "info_type": "Paladins",
+                    "normal": "225",
+                    "inno": "221",
+                    "emblem": "-"
+                },
+                {
+                    "info_type": "Archers",
+                    "normal": "225",
+                    "inno": "222",
+                    "emblem": "-"
+                },
+                {
+                    "info_type": "Thieves",
+                    "normal": "225",
+                    "inno": "222",
+                    "emblem": "-"
+                },
+                {
+                    "info_type": "Guns",
+                    "normal": "225",
+                    "inno": "222",
+                    "emblem": "-"
+                },
+                {
+                    "info_type": "Knucklers",
+                    "normal": "225",
+                    "inno": "223",
+                    "emblem": "-"
+                },
+                {
+                    "info_type": "Mages",
+                    "normal": "225",
+                    "inno": "224",
+                    "emblem": "-"
+                }
+            ],
+            "normal": [
+                {
+                    "info_type": "Secondary Weapon",
+                    "normal": "41",
+                    "inno": "41",
+                    "emblem": "-"
+                },
+                {
+                    "info_type": "Warriors (except paladins)",
+                    "normal": "26",
+                    "inno": "26",
+                    "emblem": "-"
+                },
+                {
+                    "info_type": "Paladins",
+                    "normal": "28",
+                    "inno": "28",
+                    "emblem": "-"
+                },
+                {
+                    "info_type": "Archers",
+                    "normal": "28",
+                    "inno": "28",
+                    "emblem": "-"
+                },
+                {
+                    "info_type": "Thieves",
+                    "normal": "29",
+                    "inno": "29",
+                    "emblem": "-"
+                },
+                {
+                    "info_type": "Guns",
+                    "normal": "28",
+                    "inno": "28",
+                    "emblem": "-"
+                },
+                {
+                    "info_type": "Knucklers",
+                    "normal": "29",
+                    "inno": "29",
+                    "emblem": "-"
+                },
+                {
+                    "info_type": "Mages",
+                    "normal": "30",
+                    "inno": "30",
+                    "emblem": "-"
+                }
+            ]
+        }
+    ]
+}

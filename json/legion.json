@@ -1,0 +1,124 @@
+{
+    "legion": [
+        {
+            "rank": "Nameless Legion I",
+            "level": "-",
+            "coin": "-",
+            "max": "9"
+        },
+        {
+            "rank": "Nameless Legion II",
+            "level": "100",
+            "coin": "0",
+            "max": "10"
+        },
+        {
+            "rank": "Nameless Legion III",
+            "level": "400",
+            "coin": "50",		
+            "max": "11"
+        },
+        {
+            "rank": "Nameless Legion IV",
+            "level": "700",
+            "coin": "100",		
+            "max": "12"
+        },
+        {
+            "rank": "Nameless Legion V",
+            "level": "100",
+            "coin": "140",		
+            "max": "13"
+        },
+        {
+            "rank": "Renowned Legion I",
+            "level": "1300",		
+            "coin": "160",
+            "max": "15"
+        },
+        {
+            "rank": "Renowned Legion II",
+            "level": "1600",		
+            "coin": "180",
+            "max": "16"
+        },
+        {
+            "rank": "Renowned Legion III",
+            "level": "1900",		
+            "coin": "350",
+            "max": "17"
+        },
+        {
+            "rank": "Renowned Legion IV",
+            "level": "2100",		
+            "coin": "370",
+            "max": "18"
+        },
+        {
+            "rank": "Renowned Legion V",
+            "level": "2400",		
+            "coin": "390",
+            "max": "19"
+        },
+        {
+            "rank": "Heroic Legion I",
+            "level": "2700",		
+            "coin": "420",
+            "max": "21"
+        },
+        {
+            "rank": "Heroic Legion II",
+            "level": "3000",		
+            "coin": "450",
+            "max": "22"
+        },
+        {
+            "rank": "Heroic Legion III",
+            "level": "3300",		
+            "coin": "1000",
+            "max": "23"
+        },
+        {
+            "rank": "Heroic Legion IV",
+            "level": "3600",		
+            "coin": "1100",
+            "max": "24"
+        },
+        {
+            "rank": "Heroic Legion V",
+            "level": "3900",		
+            "coin": "1250",
+            "max": "25"
+        },
+        {
+            "rank": "Legendary Legion I",
+            "level": "4200",		
+            "coin": "1400",
+            "max": "28"
+        },
+        {
+            "rank": "Legendary Legion II",
+            "level": "4500",		
+            "coin": "1550",
+            "max": "29"
+        },
+        {
+            "rank": "Legendary Legion III",
+            "level": "5000",		
+            "coin": "3000",
+            "max": "30"
+        },
+        {
+            "rank": "Legendary Legion IV",
+            "level": "5500",		
+            "coin": "3200",
+            "max": "31"
+        },
+        {
+            "rank": "Legendary Legion V",
+            "level": "6000",		
+            "coin": "3400",
+            "max": "32"
+        }
+    ]
+}

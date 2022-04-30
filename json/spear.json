@@ -1,0 +1,63 @@
+[
+    {
+        "level": "1",
+        "unique": "1 PA/MA | 3% BA | - FD",
+        "legend": "5 PA/MA | 4% BA | - FD",
+        "mythic": "10 PA/MA | 6% BA | - FD"
+    },
+    {
+        "level": "2",
+        "unique": "2 PA/MA | 3.2% BA | - FD",
+        "legend": "10 PA/MA | 4.5% BA | - FD",
+        "mythic": "20 PA/MA | 6.7% BA | - FD"
+    },
+    {
+        "level": "3",
+        "unique": "3 PA/MA | 3.4% BA | - FD",
+        "legend": "15 PA/MA | 5% BA | 1% FD",
+        "mythic": "30 PA/MA | 7.5% BA | 2% FD"
+    },
+    {
+        "level": "4",
+        "unique": "4 PA/MA | 3.6% BA | - FD",
+        "legend": "20 PA/MA | 5.5% BA | 1% FD",
+        "mythic": "40 PA/MA | 8.2% BA | 2% FD"
+    },
+    {
+        "level": "5",
+        "unique": "5 PA/MA | 3.8% BA | - FD",
+        "legend": "25 PA/MA | 6% BA | 1% FD",
+        "mythic": "50 PA/MA | 9% BA | 2% FD"
+    },
+    {
+        "level": "6",
+        "unique": "6 PA/MA | 4% BA | - FD",
+        "legend": "30 PA/MA | 6.5% BA | 1.5% FD",
+        "mythic": "60 PA/MA | 9.7% BA | 3% FD"
+    },
+    {
+        "level": "7",
+        "unique": "7 PA/MA | 4.2% BA | - FD",
+        "legend": "35 PA/MA | 7% BA | 2% FD",
+        "mythic": "70 PA/MA | 10.5% BA | 3% FD"
+    },
+    {
+        "level": "8",
+        "unique": "8 PA/MA | 4.4% BA | 1% FD",
+        "legend": "40 PA/MA | 8% BA | 2% FD",
+        "mythic": "80 PA/MA | 12% BA | 4% FD"
+    },
+    {
+        "level": "9",
+        "unique": "9 PA/MA | 4.6% BA | 1% FD",
+        "legend": "45 PA/MA | 9% BA | 2% FD",
+        "mythic": "90 PA/MA | 13.5% BA | 4% FD"
+    },
+    {
+        "level": "10",
+        "unique": "10 PA/MA | 5% BA | 1.5% FD",
+        "legend": "50 PA/MA | 10% BA | 3% FD",
+        "mythic": "100 PA/MA | 15% BA | 5% FD"
+    }
+    
+]
