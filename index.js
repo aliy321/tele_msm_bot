@@ -1,285 +1,200 @@
+process.env.NTBA_FIX_319 = 1;
+
 require('dotenv').config();
 const express = require('express');
 const request = require('request');
-const TelegramBot = require('node-telegram-bot-api');
-var http = require('http');
+const http = require('http');
 const mongoose = require('mongoose');
 const puppeteer = require('puppeteer');
+const TelegramBot = require('node-telegram-bot-api');
+var bodyParser = require('body-parser')
 
-const SkillNodes = require('./models/skills_nodes');
-const BoostNodes = require('./models/boost_nodes');
-const JewelsData = require('./models/jewel');
-const SetEffectData = require('./models/set_effect');
-const PbaData = require('./models/pba');
-const LinkSkillData = require('./models/linkskill');
-const userData = require('./models/users');
-const LegionData = require('./models/legion');
-const LongSpearData = require('./models/long_spear');
-const imagesData = require('./models/images');
-const statsCapData = require('./models/stats_cap');
-const trioData = require('./models/trio');
+//-----------------------------------------
+// MODELS
+//-----------------------------------------
 
+const userModel = require("./models/users_model");
+const jewelModel = require("./models/jewel_model");
+const skillNodesModel = require('./models/skills_nodes_model');
+const boostNodesModel = require('./models/boost_nodes_model');
+const setEffectModel = require('./models/set_effect_model');
+const pbaModel = require('./models/pba_model');
+const linkSkillModel = require('./models/linkskill_model');
+const legionModel = require('./models/legion_model');
+const longSpearModel = require('./models/long_spear_model');
+const imagesModel = require('./models/images_model');
+const statsCapModel = require('./models/stats_cap_model');
+const trioModel = require('./models/trio_model');
+const hyperModel = require('./models/hyper_model');
+const flameModel = require('./models/flames_model');
+const potentialModel = require('./models/potentials_model');
+
+//-----------------------------------------
+// ROUTERS
+//-----------------------------------------
+
+const PORT = process.env.PORT || 4000;
 const app = express();
-const PORT = process.env.PORT || 5000;
+const router = (global.router = (express.Router()));
+
+app.use('/jewel', require('./routes/jewel_api'));
+app.use('/users', require('./routes/users_api'));
+app.use('/linkskills', require('./routes/linkskill_api'));
+app.use('/hypers', require('./routes/hyper_api'));
+app.use('/stats_caps', require('./routes/stats_cap_api'));
+app.use('/flames', require('./routes/flames_api'));
+app.use('/potential', require('./routes/potential_api'));
 
 app.use(express.json());
-app.get('/', (req, res) => {
-    res.send('Welcome to Msm Bot');
+app.use(router);
+
+//-----------------------------------------
+// MOGO DB 
+//-----------------------------------------
+
+const username = process.env.MONGO_USERNAME;
+const password = process.env.MONGO_PASSWORD;
+const cluster = process.env.MONGO_CLUSTER;
+const dbname = process.env.MONGO_DBNAME;
+
+mongoose.connect(
+    `mongodb+srv://${username}:${password}@${cluster}.mongodb.net/${dbname}?retryWrites=true&w=majority`, {
+        useNewUrlParser: true,
+        useFindAndModify: false,
+        useUnifiedTopology: true
+    }
+);
+
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error: "));
+db.once("open", function () {
+    console.log("Connected successfully");
 });
 
-const dbURI = "mongodb+srv://msm-bot-user:aliyakhbar321@msmtelebot.asg5e.mongodb.net/msm-bot?retryWrites=true&w=majority";
-mongoose.connect(dbURI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    })
-    .then((result) => app.listen(PORT))
-    .catch((err) => console.log(err))
+app.listen(PORT, () => {
+    console.log(`Server is running at port ${PORT}`);
+});
 
-// live app
-const token = '1849291188:AAFAReTWpmKLcassRWo-uCTvlVl54wqIFHo';
+//-----------------------------------------
+// Let bot stay awake constantly 
+//-----------------------------------------
 
-// test api
-// const token = '1915236290:AAFU6-RJPa1nHNC9BYx_adLmG3vPAbQW7Ck';
+setInterval(function () {
+    const host = 'http://msm-bot.herokuapp.com';
+
+    http.get(host, function (res) {
+        res.on('data', function (chunk) {
+            // console.log(res);
+            try {
+                // optional logging... disable after it's working
+                console.log("HEROKU RESPONSE: " + chunk);
+            } catch (err) {
+                console.log(err.message);
+            }
+        });
+    }).on('error', function (err) {
+        console.log("Error: " + err.message);
+    });
+}, 20 * 60 * 1000); // load every 20 minutes
+
+//-----------------------------------------
+// TELEGRAM 
+//-----------------------------------------
+
+// replace the value below with the Telegram token you receive from @BotFather
+const token = process.env.TELE_TOKEN_API_TEST;
 
 // Create a bot that uses 'polling' to fetch new updates
 const bot = new TelegramBot(token, {
-    polling: true,
-    filepath: false,
+    polling: true
 });
 
-function startKeepAlive() {
-    setInterval(function () {
-        const host = 'http://msm-bot.herokuapp.com';
+//-----------------------------------------
+// Bot Commands 
+//-----------------------------------------
 
-        http.get(host, function (res) {
-            res.on('data', function (chunk) {
-                // console.log(res);
-                try {
-                    // optional logging... disable after it's working
-                    console.log("HEROKU RESPONSE: " + chunk);
-                } catch (err) {
-                    console.log(err.message);
-                }
-            });
-        }).on('error', function (err) {
-            console.log("Error: " + err.message);
-        });
-    }, 20 * 60 * 1000); // load every 20 minutes
-}
-
-startKeepAlive();
-
-// mongoose & mongo tests
-app.get('/add-user', (req, res) => {
-    const user = new userData({
-        username: 'aliy akhbar',
-        uid: '123123',
-        isAdmin: 'no'
-    })
-
-    user.save()
-        .then(result => {
-            res.send(result);
-        })
-        .catch(err => {
-            console.log(err);
-        });
-});
-
-app.get('/all-user', (req, res) => {
-    userData.find()
-        .then(result => {
-            res.send(result);
-        })
-        .catch(err => {
-            console.log(err);
-        });
-});
-
-app.get('/all-non-admin-user', (req, res) => {
-    userData.find({
-            'isAdmin': 'no'
-        })
-        .then(result => {
-            res.send(result);
-        })
-        .catch(err => {
-            console.log(err);
-        });
-});
-
-
-// INSERT DATA
-app.get('/add-trio', (req, res) => {
-    const info = new trioData({
-        "key": "merc",
-        "name": "Mercedes",
-        "skill": [
-            {
-                "skill": "Ishtar's Ring | Stunning Strike | Elemental Knights"
-            },
-            {
-                "skill": "Holy Charge | Blizzard Charge | Fire Charge"
-            }
-        ]
-    })
-
-    info.save()
-        .then(result => {
-            res.send(result);
-        })
-        .catch(err => {
-            console.log(err);
-        });
-});
-
-app.get('/all-trio', (req, res) => {
-    trioData.find()
-        .then(result => {
-            res.send(result);
-        })
-        .catch(err => {
-            console.log(err);
-        });
-});
-
-app.get('/all-pba', (req, res) => {
-    var action = 'wa';
-    var replace = "regex\\i";
-    var re = new RegExp(action, "i");
-
-    PbaData.find()
-        .then(result => {
-            res.send(result);
-        })
-        .catch(err => {
-            console.log(err);
-        });
-});
-
-
-
-
-
-
-// ADMIN STUFF
+// START
 bot.onText(/\/start/, (msg) => {
-    const uid = msg.from.id;
-    const userName = msg.from.username;
-    const date = msg.date;
+    const chatId = msg.chat.id;
+    const resp = 'Hi ' + `${msg.from.username}` + '! Im <b>Professor MSM</b>. Im here to provide you with Maplestory M resources on the go! \n\n<b>Press / to see available commands!</b> \n\nEnjoy.';
 
-    // console.log(uid);
-
-    userData.find({
-            'uid': `${uid}`
-        })
-        .then(result => {
-            // console.log(result);
-
-            if (result.length > 0) {
-                // console.log("welcome the user");
-
-                const resp = 'Hi ' + `${userName}` + '! Im <b>Professor MSM</b>. Im here to provide you with Maplestory M resources on the go! \n\n<b>Press / to see available commands!</b> \n\nEnjoy.';
-
-                bot.sendMessage(msg.chat.id, resp, {
-                    parse_mode: 'HTML'
+    userModel.findOne({
+        uid: msg.from.id
+    }, (err, user) => {
+        if (err) {
+            console.log(err);
+        } else {
+            if (!user) {
+                console.log(user);
+                const newUser = new userModel({
+                    uid: msg.from.id,
+                    username: msg.from.username,
                 });
 
+                newUser.save();
             } else {
-                // console.log("empty");
-
-                const user = new userData({
-                    username: userName,
-                    uid: uid,
-                    isAdmin: 'no'
-                })
-
-                user.save();
-
-                const resp = 'Hi ' + `${userName}` + '! Im <b>Professor MSM</b>. Im here to provide you with Maplestory M resources on the go! \n\n<b>Press / to see available commands!</b> \n\nEnjoy.';
-
-                bot.sendMessage(msg.chat.id, resp, {
-                    parse_mode: 'HTML'
+                // update username
+                userModel.findOneAndUpdate({
+                    uid: msg.from.id
+                }, {
+                    username: msg.from.username
+                }, (err, user) => {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log(user);
+                    }
                 });
             }
-        })
-        .catch(err => {
-            console.log(err);
+        }
+    });
 
-            const resp = "Woopie Daisy! Try again later.";
+    bot.sendMessage(msg.chat.id, resp, {
+        parse_mode: 'HTML'
+    });
+});
 
-            bot.sendMessage(msg.chat.id, resp, {
-                parse_mode: 'HTML'
+// GET ALL USERS
+bot.onText(/\/getUsers/, async (msg) => {
+    const chatId = msg.chat.id;
+    const checkAdmin = await bot.getChatMember(chatId, msg.from.id);
+    console.log(checkAdmin['user']['id']);
+
+    if (checkAdmin['user']['id'] == '371956752') {
+        console.log(checkAdmin);
+        const users = await userModel.find({});
+
+        try {
+            // console.log(users);
+
+            // convert users to string
+            let usersString = '';
+            let index = 1;
+
+            users.forEach((user, index) => {
+                // add total count of users
+                usersString += `${index + 1}. @${user.username} | ${user.uid} \n`;
             });
-        });
-});
 
-bot.onText(/\/getUsers/, (msg) => {
-    console.log('getUsers');
-
-    userData.find({
-            'isAdmin': 'no'
-        })
-        .then(result => {
-            var message = '';
-
-            for (const results of result) {
-                // console.log(results.username);
-                message += '<b>@' + results.username + '</b> | ' + results.uid + '\n\n';
-            }
-
-            bot.sendMessage(msg.chat.id, message, {
-                parse_mode: 'HTML'
-            });
-        })
-        .catch(err => {
+            bot.sendMessage(msg.chat.id, usersString);
+        } catch (err) {
             console.log(err);
-        });
+        }
+    }
 });
 
-// admin broadcast msg to all user
-bot.onText(/\/admin_cast (.+)/, (msg, match) => {
-    // console.log(match[1]);
-    const resp = match['input'];
-    console.log(resp);
-
-    const filterResp = resp.replace('/admin_cast', '')
-    console.log(filterResp);
-
-    userData.find({
-            'isAdmin': 'no'
-        })
-        .then(result => {
-            var message = '';
-
-            for (const results of result) {
-                // console.log(results.username);
-                const uid = results.uid;
-
-                bot.sendMessage(uid, filterResp, {
-                    parse_mode: 'Markdown'
-                });
-            }
-        })
-        .catch(err => {
-            console.log(err);
-        });
-});
-// ADMIN STUFF
-
-// Skill Node
+// SKILL NODES
 bot.onText(/\/skillnode/, (msg) => {
-    SkillNodes.find()
+    skillNodesModel.find()
         .then(result => {
             // console.log(result);
             var message = '';
 
             for (const results of result) {
-                // console.log(results.level);
                 message += '<b>Level ' + results.level + '</b>\n<b>Need :</b> ' + results.need + '\n<b>To Max :</b> ' + results.max + '\n<b>Extract :</b> ' + results.shards + ' shards\n\n';
             }
 
-            const resp = "<b> Skill Nodes</b> \n_ _ _ _ _ \n\n" + `${message}`;
+            const resp = "<b> Skill Node</b> \n_ _ _ _ _ \n\n" + `${message}`;
 
             bot.sendMessage(msg.chat.id, resp, {
                 parse_mode: 'HTML'
@@ -296,9 +211,9 @@ bot.onText(/\/skillnode/, (msg) => {
         });
 });
 
-// boost Node
+// BOOST NODE
 bot.onText(/\/boostnode/, (msg) => {
-    BoostNodes.find()
+    boostNodesModel.find()
         .then(result => {
             // console.log(result);
             var message = '';
@@ -325,9 +240,9 @@ bot.onText(/\/boostnode/, (msg) => {
         });
 });
 
-// legion
+// LEGION
 bot.onText(/\/legion/, (msg) => {
-    LegionData.find()
+    legionModel.find()
         .then(result => {
             // console.log(result);
             var message = '';
@@ -354,9 +269,9 @@ bot.onText(/\/legion/, (msg) => {
         });
 });
 
-// long spear
+// lONGINOUS SPEAR
 bot.onText(/\/spear/, (msg) => {
-    LongSpearData.find()
+    longSpearModel.find()
         .then(result => {
             // console.log(result);
             var message = '';
@@ -392,7 +307,7 @@ bot.onText(/\/buff/, (msg) => {
     var re = new RegExp('buff', "i");
     let data;
 
-    imagesData.find({
+    imagesModel.find({
             name: re
         }, '')
         .then(result => {
@@ -417,83 +332,6 @@ bot.onText(/\/buff/, (msg) => {
         });
 });
 
-// PATCH NOTES
-bot.onText(/\/patch/, (msg) => {
-    try {
-        (async () => {
-            /** by default puppeteer launch method have headless option true*/
-            const browser = await puppeteer.launch({
-                headless: true,
-                args: [
-                    '--no-sandbox',
-                    '--disable-setuid-sandbox',
-                  ],
-            });
-            const page = await browser.newPage();
-            const URL = "https://m.nexon.com/forum/board/1382";
-
-            await page.goto(URL);
-
-            const list = await page.evaluate(() => {
-                let results = [];
-                let items = document.querySelectorAll('a.row');
-                const link = "https://m.nexon.com";
-
-                items.forEach((item) => {
-                    results.push({
-                        url: link + item.getAttribute('href'),
-                        text: item.innerText,
-                    });
-                });
-
-                return results[0];
-            })
-
-            const resp = "<b> Latest Patch Notes </b> \n_ _ _ _ _ \n\n" + `${list['url']}`;
-
-            bot.sendMessage(msg.chat.id, resp, {
-                parse_mode: 'HTML'
-            });
-
-            await browser.close();
-        })()
-    } catch (err) {
-        const resp = "Woopie Daisy! Try again later.";
-
-        bot.sendMessage(msg.chat.id, resp, {
-            parse_mode: 'HTML'
-        });
-    }
-});
-
-// long spear
-bot.onText(/\/statscap/, (msg) => {
-    statsCapData.find()
-        .then(result => {
-            // console.log(result);
-            var message = '';
-
-            for (const results of result) {
-                message += '<b>' + results.name + '</b> - ' + results.stats + '\n\n';
-            }
-
-            const resp = "<b> Stats Cap </b> \n_ _ _ _ _ \n\n" + `${message}`;
-
-            bot.sendMessage(msg.chat.id, resp, {
-                parse_mode: 'HTML'
-            });
-        })
-        .catch(err => {
-            console.log(err);
-
-            const resp = "Woopie Daisy! Try again later.";
-
-            bot.sendMessage(msg.chat.id, resp, {
-                parse_mode: 'HTML'
-            });
-        });
-});
-
 // PERFECT TRIO
 bot.onText(/\/trio (.+)/, (msg, match) => {
     console.log('perfect trio');
@@ -505,7 +343,7 @@ bot.onText(/\/trio (.+)/, (msg, match) => {
     let name = '';
     let i = 1;
 
-    trioData.find({
+    trioModel.find({
             key: capture
         })
         .then(result => {
@@ -548,16 +386,43 @@ bot.onText(/\/trio (.+)/, (msg, match) => {
     // console.log(search);
 });
 
-const opt = [];
-var callbackToQuery = "";
+// STATS CAP
+bot.onText(/\/statscap/, (msg) => {
+    statsCapModel.find()
+        .then(result => {
+            // console.log(result);
+            var message = '';
+
+            for (const results of result) {
+                console.log(results);
+                message += '<b>' + results.name + "</b>" + " : " + results.stats + '\n\n';
+            }
+
+            const resp = "<b> Stats Cap (Not confirmed by nexon)</b> \n_ _ _ _ _ \n\n" + `${message}`;
+
+            bot.sendMessage(msg.chat.id, resp, {
+                parse_mode: 'HTML'
+            });
+        })
+        .catch(err => {
+            console.log(err);
+
+            const resp = "Woopie Daisy! Try again later.";
+
+            bot.sendMessage(msg.chat.id, resp, {
+                parse_mode: 'HTML'
+            });
+        });
+});
+
+//-----------------------------------------
+// Bot Commands /W OPTIONS 
+//-----------------------------------------
 
 // JEWEL
-bot.onText(/\/jewel/, function onEditableText(msg) {
-    callbackToQuery = "Jewel";
-
-    opt.length = 0;
-
-    opt.push([{
+bot.onText(/\/jewel/, async (msg) => {
+    const opt = [
+        [{
                 text: '🟥',
                 callback_data: 'Red Jewel'
             },
@@ -602,26 +467,72 @@ bot.onText(/\/jewel/, function onEditableText(msg) {
                 callback_data: 'Purple Jewel Set'
             }
         ]
-    );
+    ];
 
-    const opts = {
+    await bot.sendMessage(msg.chat.id, "Select an option", {
         reply_markup: {
-            inline_keyboard: opt
+            inline_keyboard: opt,
         }
-    };
+    });
 
-    bot.sendMessage(msg.from.id, 'Select an option', opts);
+    bot.on('callback_query', (callbackQuery) => {
+        const chatId = callbackQuery.message.chat.id;
+        const messageId = callbackQuery.message.message_id;
+        const data = callbackQuery.data;
+
+        jewelModel.findOne({
+            name: callbackQuery.data
+        }, (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                if (result) {
+                    // convert result to object
+                    const resultObject = JSON.parse(JSON.stringify(result));
+                    // console.log(resultObject.jewel);
+
+                    // loop through result object
+                    let jewelString = `${result.name}: \n\n`;
+
+                    resultObject.jewel.forEach((jewel, index) => {
+                        jewelString += `<b>${jewel.rank}</b> \n${jewel.info} \n\n`;
+                    });
+
+                    // update message
+                    bot.editMessageText(jewelString, {
+                        chat_id: chatId,
+                        message_id: messageId,
+                        reply_markup: {
+                            inline_keyboard: opt,
+                        },
+                        parse_mode: 'HTML'
+                    });
+                } else {
+                    let message = 'Woopsie! Something went wrong. Please try again later.';
+
+                    bot.editMessageText(message, {
+                        chat_id: chatId,
+                        message_id: messageId,
+                        reply_markup: {
+                            inline_keyboard: opt,
+                        },
+                        parse_mode: 'HTML'
+                    });
+                }
+            }
+        });
+
+    });
 });
 
-// SETEFFECT
-bot.onText(/\/seteffect/, function onEditableText(msg) {
-    callbackToQuery = "SetEffect";
-    opt.length = 0
-
-    opt.push([{
+// SET EFFECT
+bot.onText(/\/seteffect/, async (msg) => {
+    const opt = [
+        [{
             text: 'Necro',
             callback_data: 'Necro'
-        }], [{
+        }],
+        [{
             text: 'Fafnir',
             callback_data: 'Fafnir'
         }],
@@ -641,22 +552,70 @@ bot.onText(/\/seteffect/, function onEditableText(msg) {
             text: 'Eclectic',
             callback_data: 'Eclectic'
         }]
-    );
+    ];
 
-    const opts = {
+    bot.sendMessage(msg.chat.id, "Select an option", {
         reply_markup: {
-            inline_keyboard: opt
+            inline_keyboard: opt,
         }
-    };
-    bot.sendMessage(msg.from.id, 'Select an option', opts);
+    });
+
+    await bot.on('callback_query', (callbackQuery) => {
+        const chatId = callbackQuery.message.chat.id;
+        const messageId = callbackQuery.message.message_id;
+        const data = callbackQuery.data;
+
+        setEffectModel.findOne({
+            name: callbackQuery.data
+        }, (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                if (result) {
+                    // console.log(result);
+
+                    // convert result to object
+                    const resultObject = JSON.parse(JSON.stringify(result));
+                    // console.log(resultObject.jewel);
+
+                    // loop through result object
+                    let jewelString = `${result.name}: \n\n`;
+
+                    resultObject.set.forEach((set, index) => {
+                        jewelString += `<b>${set.set}</b> \n${set.info} \n\n`;
+                    });
+
+                    // update message
+                    bot.editMessageText(jewelString, {
+                        chat_id: chatId,
+                        message_id: messageId,
+                        reply_markup: {
+                            inline_keyboard: opt,
+                        },
+                        parse_mode: 'HTML'
+                    });
+                } else {
+                    let message = 'Woopsie! Something went wrong. Please try again later.';
+
+                    bot.editMessageText(message, {
+                        chat_id: chatId,
+                        message_id: messageId,
+                        reply_markup: {
+                            inline_keyboard: opt,
+                        },
+                        parse_mode: 'HTML'
+                    });
+                }
+            }
+        });
+
+    });
 });
 
-// PBA WEAP
-bot.onText(/\/pba/, function onEditableText(msg) {
-    callbackToQuery = "PBA";
-    opt.length = 0
-
-    opt.push([{
+// PBA
+bot.onText(/\/pba/, async (msg) => {
+    const opt = [
+        [{
                 text: 'Necro',
                 callback_data: 'Necro'
             },
@@ -692,211 +651,511 @@ bot.onText(/\/pba/, function onEditableText(msg) {
                 callback_data: 'Normal'
             }
         ]
-    );
+    ];
 
-    const opts = {
+    bot.sendMessage(msg.chat.id, "Select an option", {
         reply_markup: {
-            inline_keyboard: opt
+            inline_keyboard: opt,
         }
-    };
-    bot.sendMessage(msg.from.id, 'Select an option', opts);
+    });
+
+    await bot.on('callback_query', (callbackQuery) => {
+        const chatId = callbackQuery.message.chat.id;
+        const messageId = callbackQuery.message.message_id;
+        const data = callbackQuery.data;
+
+        pbaModel.findOne({
+            name: callbackQuery.data
+        }, (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                if (result) {
+                    // console.log(result);
+
+                    // convert result to object
+                    const resultObject = JSON.parse(JSON.stringify(result));
+                    // console.log(resultObject.jewel);
+
+                    // loop through result object
+                    let jewelString = `${result.name}: \n\n`;
+
+                    resultObject.info.forEach((data, index) => {
+                        jewelString += '<b>' + data.info_type + '</b>\n' + 'normal: ' + data.normal + '\ninno: ' + data.inno + '\nemblem: ' + data.emblem + '\n\n';
+                    });
+
+                    // update message
+                    bot.editMessageText(jewelString, {
+                        chat_id: chatId,
+                        message_id: messageId,
+                        reply_markup: {
+                            inline_keyboard: opt,
+                        },
+                        parse_mode: 'HTML'
+                    });
+                } else {
+                    let message = 'Woopsie! Something went wrong. Please try again later.';
+
+                    bot.editMessageText(message, {
+                        chat_id: chatId,
+                        message_id: messageId,
+                        reply_markup: {
+                            inline_keyboard: opt,
+                        },
+                        parse_mode: 'HTML'
+                    });
+                }
+            }
+        });
+
+    });
 });
 
-// Linkskill
-bot.onText(/\/linkskill/, function onEditableText(msg) {
-    callbackToQuery = "LinkSkill";
-    opt.length = 0
+// LINK SKILL
+bot.onText(/\/linkskill/, async (msg) => {
+    const opt = [
+        [{
+                text: 'Invincible Belief',
+                callback_data: 3
+            },
+            {
+                text: 'Pirate Blessing',
+                callback_data: 7
+            },
+            {
+                text: 'Empirical Knowledge',
+                callback_data: 6
+            },
+        ],
+        [{
+                text: 'Thief Cunning',
+                callback_data: 8
+            },
+            {
+                text: 'Adventurer Blessing',
+                callback_data: 4
+            },
+            {
+                text: 'Spirit of Freedom',
+                callback_data: 5
+            }
+        ],
+        [{
+                text: 'Cygnus Blessing',
+                callback_data: 9
+            },
+            // {
+            //     text: '',
+            //     callback_data: ''
+            // },
+            // {
+            //     text: '',
+            //     callback_data: ''
+            // }
+        ],
+        [{
+                text: 'Offsensive Stats',
+                callback_data: 0
+            },
+            {
+                text: 'Defensive Stats',
+                callback_data: 1
+            },
+            {
+                text: 'Training Stats',
+                callback_data: 2
+            }
+        ]
+    ];
 
-    opt.push([{
-            text: 'Invincible Belief (DK, Hero, Pala)',
-            callback_data: 'Invincible Belief'
-        }],
-        [{
-            text: 'Thief Cunning (NL, Shad, DB)',
-            callback_data: 'Thief Cunning'
-        }],
-        [{
-            text: 'Spirit Of Freedom (Mech, WH, BaM)',
-            callback_data: 'Spirit Of Freedom'
-        }],
-        [{
-            text: 'Empirical Knowledge (Bsh, ILM, FP)',
-            callback_data: 'Empirical Knowledge'
-        }],
-        [{
-            text: 'Adventure Curiosity (BM, MM)',
-            callback_data: 'Adventure Curiosity'
-        }],
-        [{
-            text: 'Pirate Blessing (Corsair, Bucc)',
-            callback_data: 'Pirate Blessing'
-        }],
-        [{
-            text: 'Cygnus Blessing (DW, NW, WA, BW, TB)',
-            callback_data: 'Cygnus Blessing'
-        }],
-        [{
-            text: 'Offsensive Stats',
-            callback_data: 'Offensive'
-        }],
-        [{
-            text: 'Defensive Stats',
-            callback_data: 'Defensive'
-        }],
-        [{
-            text: 'Training Stats',
-            callback_data: 'Training'
-        }],
-    );
-
-    const opts = {
+    bot.sendMessage(msg.chat.id, "Select an option", {
         reply_markup: {
-            inline_keyboard: opt
+            inline_keyboard: opt,
         }
-    };
-    bot.sendMessage(msg.from.id, 'Select an option (Updated as of Angelic Buster Release)', opts);
+    });
+
+    await bot.on('callback_query', (callbackQuery) => {
+        const chatId = callbackQuery.message.chat.id;
+        const messageId = callbackQuery.message.message_id;
+        const data = callbackQuery.data;
+        // console.log(data);
+
+        linkSkillModel.findOne({
+            uid: data
+        }, (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                if (result) {
+                    // console.log(result);
+
+                    // convert result to object
+                    const resultObject = JSON.parse(JSON.stringify(result));
+                    // console.log(resultObject.jewel);
+
+                    // loop through result object
+                    let message = `${result.name}: \n\n`;
+
+                    resultObject.skill.forEach((data, index) => {
+                        message += '<b>' + data.name + '</b> \n' + data.stats + '\n\n';
+                    });
+
+                    // update message
+                    bot.editMessageText(message, {
+                        chat_id: chatId,
+                        message_id: messageId,
+                        reply_markup: {
+                            inline_keyboard: opt,
+                        },
+                        parse_mode: 'HTML'
+                    });
+                } else {
+                    let message = 'Woopsie! Something went wrong. Please try again later.';
+
+                    bot.editMessageText(message, {
+                        chat_id: chatId,
+                        message_id: messageId,
+                        reply_markup: {
+                            inline_keyboard: opt,
+                        },
+                        parse_mode: 'HTML'
+                    });
+                }
+            }
+        });
+
+    });
 });
 
+// HYPER STATS
+bot.onText(/\/hyper/, async (msg) => {
+    const opt = [
+        [{
+                text: 'Final Dmg %',
+                callback_data: 0
+            },
+            {
+                text: 'Max Dmg Inc',
+                callback_data: 1
+            },
+            {
+                text: 'Phy Dmg %',
+                callback_data: 2
+            },
+        ],
+        [{
+                text: 'Mag Dmg %',
+                callback_data: 3
+            },
+            {
+                text: 'Crit Rate %',
+                callback_data: 4
+            },
+            {
+                text: 'Crit Dmg %',
+                callback_data: 5
+            }
+        ],
+        [{
+                text: 'Boss Atk %',
+                callback_data: 6
+            },
+            {
+                text: 'Exp %',
+                callback_data: 7
+            },
+            {
+                text: 'SF Inc',
+                callback_data: 8
+            }
+        ],
+        [{
+                text: 'Party Exp %',
+                callback_data: 9
+            },
+            {
+                text: 'KBK',
+                callback_data: 10
+            },
+            {
+                text: 'Fever Duration Inc',
+                callback_data: 11
+            }
+        ],
+        [{
+                text: 'Item Buff Duration Inc',
+                callback_data: 12
+            },
+            {
+                text: 'Chance for Add. Dmg %',
+                callback_data: 13
+            },
+            {
+                text: 'Atk Ignore Rate %',
+                callback_data: 14
+            }
+        ]
+    ];
 
-// Handle callback queries
-bot.on('callback_query', function onCallbackQuery(callbackQuery) {
-    const action = callbackQuery.data;
-    const msg = callbackQuery.message;
-    const opts = {
-        chat_id: msg.chat.id,
-        message_id: msg.message_id,
+    bot.sendMessage(msg.chat.id, "Select an option", {
         reply_markup: {
-            inline_keyboard: opt
-        },
-        parse_mode: 'HTML'
-    };
+            inline_keyboard: opt,
+        }
+    });
 
-    // console.log(opt);
+    await bot.on('callback_query', (callbackQuery) => {
+        const chatId = callbackQuery.message.chat.id;
+        const messageId = callbackQuery.message.message_id;
+        const data = callbackQuery.data;
+        // console.log(data);
 
-    let message = '';
-
-    if (callbackToQuery === "Jewel") {
-        console.log('call back jewel');
-
-        JewelsData.find({
-                'name': `${action}`
-            })
-            .then(result => {
-                // console.log(result);
-
-                result.forEach(function (item, i) {
-                    item.jewel.forEach(function (subItem, i) {
-                        // console.log(subItem.rank);
-                        message += '<b>' + subItem.rank + '</b>\n' + subItem.info + '\n\n';
-                    });
-                });
-
-                const resp = '<b>' + `${action}` + "</b> \n_ _ _ _ _ \n\n" + `${message}`;
-
-                bot.editMessageText(resp, opts);
-            })
-            .catch(err => {
+        hyperModel.findOne({
+            uid: data
+        }, (err, result) => {
+            if (err) {
                 console.log(err);
 
-                const resp = "Woopie Daisy! Try again later.";
+            } else {
+                if (result) {
+                    // console.log(result);
 
-                bot.sendMessage(msg.chat.id, resp, {
-                    parse_mode: 'HTML'
-                });
-            });
+                    // convert result to object
+                    const resultObject = JSON.parse(JSON.stringify(result));
+                    // console.log(resultObject.jewel);
 
-    } else if (callbackToQuery === "SetEffect") {
-        console.log('call back seteffect');
+                    // loop through result object
+                    let message = `Description : ${result.description} \n\n`;
 
-        SetEffectData.find({
-                'name': `${action}`
-            })
-            .then(result => {
-                // console.log(result);
+                    resultObject.info.forEach((data, index) => {
+                        // message += '<b>' + data.level + '</b> \n' + data.info + '\n\n' + '<b>' + data.cost + '</b>';
+                        message += '<b>' + data.level + '</b>\n' + result.name + " : " + data.info + '\nCost: ' + data.cost + '\n\n';
 
-                result.forEach(function (item, i) {
-                    item.set.forEach(function (subItem, i) {
-                        // console.log(subItem.rank);
-                        message += '<b>' + subItem.set + '</b>\n' + subItem.info + '\n\n';
                     });
-                });
 
-                const resp = '<b>' + `${action}` + "</b> \n_ _ _ _ _ \n\n" + `${message}`;
-
-                bot.editMessageText(resp, opts);
-            })
-            .catch(err => {
-                console.log(err);
-
-                const resp = "Woopie Daisy! Try again later.";
-
-                bot.sendMessage(msg.chat.id, resp, {
-                    parse_mode: 'HTML'
-                });
-            });
-    } else if (callbackToQuery === "PBA") {
-        console.log('call back PBA');
-
-        PbaData.find({
-                'name': `${action}`
-            })
-            .then(result => {
-                // console.log(result);
-
-                result.forEach(function (item, i) {
-                    item.info.forEach(function (subItem, i) {
-                        message += '<b>' + subItem.info_type + '</b>\n' + 'normal: ' + subItem.normal + '\ninno: ' + subItem.inno + '\nemblem: ' + subItem.emblem + '\n\n';
+                    // update message
+                    bot.editMessageText(message, {
+                        chat_id: chatId,
+                        message_id: messageId,
+                        reply_markup: {
+                            inline_keyboard: opt,
+                        },
+                        parse_mode: 'HTML'
                     });
-                });
+                } else {
+                    let message = 'Woopsie! Something went wrong. Please try again later.';
 
-                const resp = '<b>' + `${action}` + " PBA </b> \n_ _ _ _ _ \n\n" + `${message}`;
-
-                bot.editMessageText(resp, opts);
-            })
-            .catch(err => {
-                console.log(err);
-
-                const resp = "Woopie Daisy! Try again later.";
-
-                bot.sendMessage(msg.chat.id, resp, {
-                    parse_mode: 'HTML'
-                });
-            });
-
-    } else if (callbackToQuery === "LinkSkill") {
-        console.log('call back linkskill');
-
-        var replace = "regex\\i";
-        var re = new RegExp(action, "i");
-        // console.log(re);
-        let name = '';
-
-        LinkSkillData.find({
-                name: re
-            }, '')
-            .then(result => {
-                result.forEach(function (item, i) {
-                    name = item.name;
-
-                    item.skill.forEach(function (subItem, i) {
-                        message += 'Level : ' + subItem.name + ' \n' + subItem.stats + '\n\n';
+                    bot.editMessageText(message, {
+                        chat_id: chatId,
+                        message_id: messageId,
+                        reply_markup: {
+                            inline_keyboard: opt,
+                        },
+                        parse_mode: 'HTML'
                     });
-                });
+                }
+            }
+        });
+    });
+});
 
-                const resp = '<b>' + `${name}` + " </b> \n_ _ _ _ _ \n\n" + `${message}`;
+// FLAMES
+bot.onText(/\/flames/, async (msg) => {
+    const opt = [
+        [{
+                text: 'Epic',
+                callback_data: 0
+            },
+            {
+                text: 'Unique',
+                callback_data: 1
+            },
+        ],
+        [{
+                text: 'Legend',
+                callback_data: 2
+            },
+            {
+                text: 'Mythic',
+                callback_data: 3
+            },
+        ]
+    ];
 
-                bot.editMessageText(resp, opts);
-            })
-            .catch(err => {
+    bot.sendMessage(msg.chat.id, "Select an option", {
+        reply_markup: {
+            inline_keyboard: opt,
+        }
+    });
+
+    await bot.on('callback_query', (callbackQuery) => {
+        const chatId = callbackQuery.message.chat.id;
+        const messageId = callbackQuery.message.message_id;
+        const data = callbackQuery.data;
+        // console.log(data);
+
+        flameModel.findOne({
+            uid: data
+        }, (err, result) => {
+            if (err) {
                 console.log(err);
+            } else {
+                if (result) {
+                    // console.log(result);
 
-                const resp = "Woopie Daisy! Try again later.";
+                    // convert result to object
+                    const resultObject = JSON.parse(JSON.stringify(result));
+                    // console.log(resultObject.jewel);
 
-                bot.sendMessage(msg.chat.id, resp, {
-                    parse_mode: 'HTML'
-                });
-            });
+                    // loop through result object
+                    let message = `Flames for : ${result.name} \n\n`;
 
-    }
+                    resultObject.data.forEach((data, index) => {
+                        message += '<b>' + data.name + '</b>\n' + data.stats + '\n\n';
 
+                    });
+
+                    // update message
+                    bot.editMessageText(message, {
+                        chat_id: chatId,
+                        message_id: messageId,
+                        reply_markup: {
+                            inline_keyboard: opt,
+                        },
+                        parse_mode: 'HTML'
+                    });
+                } else {
+                    let message = 'Woopsie! Something went wrong. Please try again later.';
+
+                    bot.editMessageText(message, {
+                        chat_id: chatId,
+                        message_id: messageId,
+                        reply_markup: {
+                            inline_keyboard: opt,
+                        },
+                        parse_mode: 'HTML'
+                    });
+                }
+            }
+        });
+    });
+});
+
+// POTENTIALS
+bot.onText(/\/potential/, async (msg) => {
+    const opt = [
+        [{
+                text: 'Weapon',
+                callback_data: 0
+            },
+            {
+                text: 'Hat',
+                callback_data: 1
+            },
+            {
+                text: 'Outfit',
+                callback_data: 2
+            },
+            {
+                text: 'Gloves',
+                callback_data: 3
+            },
+        ],
+        [
+            {
+                text: 'Shoes',
+                callback_data: 4
+            },
+            {
+                text: 'Shoulder',
+                callback_data: 5
+            },
+            {
+                text: 'Belt',
+                callback_data: 6
+            },
+            {
+                text: 'Cape',
+                callback_data: 7
+            },
+        ],
+        [
+            {
+                text: 'Earing',
+                callback_data: 8
+            },
+            {
+                text: 'Necklace',
+                callback_data: 9
+            },
+            {
+                text: 'Ring',
+                callback_data: 10
+            },
+            {
+                text: 'Hearts',
+                callback_data: 11
+            },
+            {
+                text: 'Pocket',
+                callback_data: 12
+            },
+        ]
+    ];
+
+    bot.sendMessage(msg.chat.id, "Select an option", {
+        reply_markup: {
+            inline_keyboard: opt,
+        }
+    });
+
+    await bot.on('callback_query', (callbackQuery) => {
+        const chatId = callbackQuery.message.chat.id;
+        const messageId = callbackQuery.message.message_id;
+        const data = callbackQuery.data;
+        // console.log(data);
+
+        potentialModel.findOne({
+            uid: data
+        }, (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                if (result) {
+                    // console.log(result);
+
+                    // convert result to object
+                    const resultObject = JSON.parse(JSON.stringify(result));
+                    // console.log(resultObject.jewel);
+
+                    // loop through result object
+                    let message = `Potential for : ${result.name} \n\n`;
+
+                    resultObject.data.forEach((data, index) => {
+                        message += '<b>' + data.name + '</b>\n' + "Epic: " + data.epic + '\n' + "Unique: " + data.unique + '\n' + "Legend: " + data.legend + '\n\n';
+                    });
+
+                    // update message
+                    bot.editMessageText(message, {
+                        chat_id: chatId,
+                        message_id: messageId,
+                        reply_markup: {
+                            inline_keyboard: opt,
+                        },
+                        parse_mode: 'HTML'
+                    });
+                } else {
+                    let message = 'Woopsie! Something went wrong. Please try again later.';
+
+                    bot.editMessageText(message, {
+                        chat_id: chatId,
+                        message_id: messageId,
+                        reply_markup: {
+                            inline_keyboard: opt,
+                        },
+                        parse_mode: 'HTML'
+                    });
+                }
+            }
+        });
+    });
 });
