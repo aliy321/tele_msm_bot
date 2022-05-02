@@ -42,13 +42,7 @@ Connect to repository
 ```bash
 $ heroku git:remote -a msm-bot-staging
 ```
-
-Clone the repository
-```bash
-$ heroku git:clone -a <heroku-repo-name>
-$ cd <heroku-repo-folder>
-```
-
+Heroku can move files from staging > production
 
 Deploy your changes
 ```bash
@@ -57,6 +51,10 @@ $ git commit -am "make it better"
 $ git push heroku HEAD:master
 ```
 
+Config Vars for Heroku (similar to .env) 
+```bash
+DONT FORGET TO UPDATE HEROKU WITH YOUR OWN CONFIG VARS
+```
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
