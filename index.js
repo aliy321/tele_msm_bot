@@ -102,8 +102,8 @@ setInterval(function () {
 //-----------------------------------------
 
 // replace the value below with the Telegram token you receive from @BotFather
-const token = process.env.TELE_TOKEN_API_TEST;
-// const token = process.env.TELE_TOKEN_API;
+// const token = process.env.TELE_TOKEN_API_TEST;
+const token = process.env.TELE_TOKEN_API;
 
 // Create a bot that uses 'polling' to fetch new updates
 const bot = new TelegramBot(token, {
