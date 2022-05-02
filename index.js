@@ -102,8 +102,8 @@ setInterval(function () {
 //-----------------------------------------
 
 // replace the value below with the Telegram token you receive from @BotFather
-// const token = process.env.TELE_TOKEN_API_TEST;
-const token = process.env.TELE_TOKEN_API;
+const token = process.env.TELE_TOKEN_API_TEST;
+// const token = process.env.TELE_TOKEN_API;
 
 // Create a bot that uses 'polling' to fetch new updates
 const bot = new TelegramBot(token, {
@@ -389,13 +389,14 @@ bot.onText(/\/trio (.+)/, (msg, match) => {
 
 // STATS CAP
 bot.onText(/\/statscap/, (msg) => {
+    console.log(msg);
     statsCapModel.find()
         .then(result => {
             // console.log(result);
             var message = '';
 
             for (const results of result) {
-                console.log(results);
+                // console.log(results);
                 message += '<b>' + results.name + "</b>" + " : " + results.stats + '\n\n';
             }
 
@@ -495,6 +496,8 @@ bot.onText(/\/patch/, (msg) => {
 
 // JEWEL
 bot.onText(/\/jewel/, async (msg) => {
+    bot.removeListener("callback_query");
+    
     const opt = [
         [{
                 text: '🟥',
@@ -549,7 +552,7 @@ bot.onText(/\/jewel/, async (msg) => {
         }
     });
 
-    bot.on('callback_query', (callbackQuery) => {
+    await bot.on('callback_query', (callbackQuery) => {
         const chatId = callbackQuery.message.chat.id;
         const messageId = callbackQuery.message.message_id;
         const data = callbackQuery.data;
@@ -601,6 +604,8 @@ bot.onText(/\/jewel/, async (msg) => {
 
 // SET EFFECT
 bot.onText(/\/seteffect/, async (msg) => {
+    bot.removeListener("callback_query");
+
     const opt = [
         [{
             text: 'Necro',
@@ -628,7 +633,7 @@ bot.onText(/\/seteffect/, async (msg) => {
         }]
     ];
 
-    bot.sendMessage(msg.chat.id, "Select an option", {
+    await bot.sendMessage(msg.chat.id, "Select an option", {
         reply_markup: {
             inline_keyboard: opt,
         }
@@ -638,6 +643,8 @@ bot.onText(/\/seteffect/, async (msg) => {
         const chatId = callbackQuery.message.chat.id;
         const messageId = callbackQuery.message.message_id;
         const data = callbackQuery.data;
+
+        console.log(messageId);
 
         setEffectModel.findOne({
             name: callbackQuery.data
@@ -688,6 +695,8 @@ bot.onText(/\/seteffect/, async (msg) => {
 
 // PBA
 bot.onText(/\/pba/, async (msg) => {
+    bot.removeListener("callback_query");
+
     const opt = [
         [{
                 text: 'Necro',
@@ -727,7 +736,7 @@ bot.onText(/\/pba/, async (msg) => {
         ]
     ];
 
-    bot.sendMessage(msg.chat.id, "Select an option", {
+    await bot.sendMessage(msg.chat.id, "Select an option", {
         reply_markup: {
             inline_keyboard: opt,
         }
@@ -737,6 +746,8 @@ bot.onText(/\/pba/, async (msg) => {
         const chatId = callbackQuery.message.chat.id;
         const messageId = callbackQuery.message.message_id;
         const data = callbackQuery.data;
+
+        console.log(messageId);
 
         pbaModel.findOne({
             name: callbackQuery.data
@@ -787,6 +798,8 @@ bot.onText(/\/pba/, async (msg) => {
 
 // LINK SKILL
 bot.onText(/\/linkskill/, async (msg) => {
+    bot.removeListener("callback_query");
+
     const opt = [
         [{
                 text: 'Invincible Belief',
@@ -842,7 +855,7 @@ bot.onText(/\/linkskill/, async (msg) => {
         ]
     ];
 
-    bot.sendMessage(msg.chat.id, "Select an option", {
+    await bot.sendMessage(msg.chat.id, "Select an option", {
         reply_markup: {
             inline_keyboard: opt,
         }
@@ -903,6 +916,8 @@ bot.onText(/\/linkskill/, async (msg) => {
 
 // HYPER STATS
 bot.onText(/\/hyper/, async (msg) => {
+    bot.removeListener("callback_query");
+
     const opt = [
         [{
                 text: 'Final Dmg %',
@@ -971,7 +986,7 @@ bot.onText(/\/hyper/, async (msg) => {
         ]
     ];
 
-    bot.sendMessage(msg.chat.id, "Select an option", {
+    await bot.sendMessage(msg.chat.id, "Select an option", {
         reply_markup: {
             inline_keyboard: opt,
         }
@@ -981,7 +996,7 @@ bot.onText(/\/hyper/, async (msg) => {
         const chatId = callbackQuery.message.chat.id;
         const messageId = callbackQuery.message.message_id;
         const data = callbackQuery.data;
-        // console.log(data);
+        console.log(chatId, messageId, data);
 
         hyperModel.findOne({
             uid: data
@@ -1034,6 +1049,8 @@ bot.onText(/\/hyper/, async (msg) => {
 
 // FLAMES
 bot.onText(/\/flames/, async (msg) => {
+    bot.removeListener("callback_query");
+
     const opt = [
         [{
                 text: 'Epic',
@@ -1055,7 +1072,7 @@ bot.onText(/\/flames/, async (msg) => {
         ]
     ];
 
-    bot.sendMessage(msg.chat.id, "Select an option", {
+    await bot.sendMessage(msg.chat.id, "Select an option", {
         reply_markup: {
             inline_keyboard: opt,
         }
@@ -1116,6 +1133,8 @@ bot.onText(/\/flames/, async (msg) => {
 
 // POTENTIALS
 bot.onText(/\/potential/, async (msg) => {
+    bot.removeListener("callback_query");
+
     const opt = [
         [{
                 text: 'Weapon',
@@ -1174,6 +1193,8 @@ bot.onText(/\/potential/, async (msg) => {
         ]
     ];
 
+    bot.removeListener("callback_query")
+
     bot.sendMessage(msg.chat.id, "Select an option", {
         reply_markup: {
             inline_keyboard: opt,
@@ -1184,11 +1205,11 @@ bot.onText(/\/potential/, async (msg) => {
         const chatId = callbackQuery.message.chat.id;
         const messageId = callbackQuery.message.message_id;
         const data = callbackQuery.data;
-        // console.log(data);
-
+        console.log('potentials' + chatId, messageId, data);
+        
         potentialModel.findOne({
             uid: data
-        }, (err, result) => {
+        }, async (err, result) => {
             if (err) {
                 console.log(err);
             } else {
@@ -1207,7 +1228,7 @@ bot.onText(/\/potential/, async (msg) => {
                     });
 
                     // update message
-                    bot.editMessageText(message, {
+                   await bot.editMessageText(message, {
                         chat_id: chatId,
                         message_id: messageId,
                         reply_markup: {

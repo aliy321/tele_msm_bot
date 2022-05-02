@@ -49,6 +49,22 @@ router.get("/hypers/:uid", async (request, response) => {
     }
 });
 
+// edit linkskill by id
+router.put("/hypers/:uid", async (request, response) => {
+    // console.log(request.params.uid);
+
+    // insertOne is used to insert a single document
+    const data = await hyperModel.updateOne({
+        uid: request.params.uid
+    }, request.body);
+    
+    try {
+        response.send(data);
+    } catch (error) {
+        response.status(500).send(error);
+    }
+});
+
 // delete hyper by id
 router.delete("/hypers/:uid", async (request, response) => {
     const _id = await hyperModel.find({uid : request.params.uid});
