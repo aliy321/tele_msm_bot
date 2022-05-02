@@ -102,7 +102,8 @@ setInterval(function () {
 //-----------------------------------------
 
 // replace the value below with the Telegram token you receive from @BotFather
-const token = process.env.TELE_TOKEN_API_TEST;
+// const token = process.env.TELE_TOKEN_API_TEST;
+const token = process.env.TELE_TOKEN_API;
 
 // Create a bot that uses 'polling' to fetch new updates
 const bot = new TelegramBot(token, {
@@ -413,6 +414,79 @@ bot.onText(/\/statscap/, (msg) => {
                 parse_mode: 'HTML'
             });
         });
+});
+
+// PATCH NOTES
+bot.onText(/\/patch/, (msg) => {
+    try {
+        (async () => {
+            /** by default puppeteer launch method have headless option true*/
+            const browser = await puppeteer.launch({
+                headless: true,
+                args: [
+                    '--no-sandbox',
+                    '--disable-setuid-sandbox',
+                ],
+            });
+
+            const page = await browser.newPage();
+            const URL = "https://m.nexon.com/forum/board/1382";
+
+            await page.goto(URL);
+
+            const list = await page.evaluate(() => {
+                let results = [];
+                let items = document.querySelectorAll('a.row');
+                const link = "https://m.nexon.com";
+
+                items.forEach((item) => {
+                    results.push({
+                        url: link + item.getAttribute('href'),
+                        // text: item.innerText,
+                    });
+                });
+
+                console.log(results);
+
+                return results;
+            })
+
+            // get the first link url
+            const url = list[0].url;
+            // go to the link
+            await page.goto(url);
+
+            const content = await page.evaluate(() => {
+                let results = [];
+                let items = document.querySelectorAll('div.thread-contents');
+
+                items.forEach((item) => {
+                    results.push({
+                        // get img src
+                        img: item.querySelector('img').getAttribute('src'),
+                    });
+                });
+
+                return results;
+            })
+
+            const resp = `Latest patch notes [here](${list[0]['url']})`;
+
+            // add image to resp
+            bot.sendVideo(msg.chat.id, content[0].img, {
+                caption: resp,
+                parse_mode: 'MarkdownV2'
+            });
+
+            await browser.close();
+        })()
+    } catch (err) {
+        const resp = "Woopie Daisy! Try again later.";
+
+        bot.sendMessage(msg.chat.id, resp, {
+            parse_mode: 'HTML'
+        });
+    }
 });
 
 //-----------------------------------------
@@ -1060,8 +1134,7 @@ bot.onText(/\/potential/, async (msg) => {
                 callback_data: 3
             },
         ],
-        [
-            {
+        [{
                 text: 'Shoes',
                 callback_data: 4
             },
@@ -1078,8 +1151,7 @@ bot.onText(/\/potential/, async (msg) => {
                 callback_data: 7
             },
         ],
-        [
-            {
+        [{
                 text: 'Earing',
                 callback_data: 8
             },
