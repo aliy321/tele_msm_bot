@@ -335,7 +335,7 @@ bot.onText(/\/buff/, (msg) => {
 
 // PERFECT TRIO
 bot.onText(/\/trio (.+)/, (msg, match) => {
-    console.log('perfect trio');
+    // console.log('perfect trio');
 
     const capture = match[1].toLowerCase();
     // var replace = "regex\\i";
@@ -389,7 +389,7 @@ bot.onText(/\/trio (.+)/, (msg, match) => {
 
 // STATS CAP
 bot.onText(/\/statscap/, (msg) => {
-    console.log(msg);
+    // console.log(msg);
     statsCapModel.find()
         .then(result => {
             // console.log(result);
@@ -644,8 +644,6 @@ bot.onText(/\/seteffect/, async (msg) => {
         const messageId = callbackQuery.message.message_id;
         const data = callbackQuery.data;
 
-        console.log(messageId);
-
         setEffectModel.findOne({
             name: callbackQuery.data
         }, (err, result) => {
@@ -746,8 +744,6 @@ bot.onText(/\/pba/, async (msg) => {
         const chatId = callbackQuery.message.chat.id;
         const messageId = callbackQuery.message.message_id;
         const data = callbackQuery.data;
-
-        console.log(messageId);
 
         pbaModel.findOne({
             name: callbackQuery.data
@@ -996,7 +992,6 @@ bot.onText(/\/hyper/, async (msg) => {
         const chatId = callbackQuery.message.chat.id;
         const messageId = callbackQuery.message.message_id;
         const data = callbackQuery.data;
-        console.log(chatId, messageId, data);
 
         hyperModel.findOne({
             uid: data
@@ -1082,7 +1077,6 @@ bot.onText(/\/flames/, async (msg) => {
         const chatId = callbackQuery.message.chat.id;
         const messageId = callbackQuery.message.message_id;
         const data = callbackQuery.data;
-        // console.log(data);
 
         flameModel.findOne({
             uid: data
@@ -1193,8 +1187,6 @@ bot.onText(/\/potential/, async (msg) => {
         ]
     ];
 
-    bot.removeListener("callback_query")
-
     bot.sendMessage(msg.chat.id, "Select an option", {
         reply_markup: {
             inline_keyboard: opt,
@@ -1205,7 +1197,6 @@ bot.onText(/\/potential/, async (msg) => {
         const chatId = callbackQuery.message.chat.id;
         const messageId = callbackQuery.message.message_id;
         const data = callbackQuery.data;
-        console.log('potentials' + chatId, messageId, data);
         
         potentialModel.findOne({
             uid: data
