@@ -80,7 +80,7 @@ app.listen(PORT, () => {
 //-----------------------------------------
 
 setInterval(function () {
-    const host = 'http://msm-bot.herokuapp.com';
+    const host = process.env.HEROKU_APP_URL;
 
     http.get(host, function (res) {
         res.on('data', function (chunk) {

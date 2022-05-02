@@ -38,6 +38,11 @@ Login to heroku
 $ heroku login
 ```
 
+Connect to repository
+```bash
+$ heroku git:remote -a msm-bot-staging
+```
+
 Clone the repository
 ```bash
 $ heroku git:clone -a <heroku-repo-name>
