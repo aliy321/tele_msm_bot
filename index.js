@@ -28,6 +28,8 @@ const trioModel = require('./models/trio_model');
 const hyperModel = require('./models/hyper_model');
 const flameModel = require('./models/flames_model');
 const potentialModel = require('./models/potentials_model');
+const magSoulModel = require('./models/mag_soul_model');
+const soulModel = require('./models/soul_model');
 
 //-----------------------------------------
 // ROUTERS
@@ -44,6 +46,8 @@ app.use('/hypers', require('./routes/hyper_api'));
 app.use('/stats_caps', require('./routes/stats_cap_api'));
 app.use('/flames', require('./routes/flames_api'));
 app.use('/potential', require('./routes/potential_api'));
+app.use('/soul', require('./routes/soul_api'));
+app.use('/mag_soul', require('./routes/mag_soul_api'));
 
 app.use(express.json());
 app.use(router);
@@ -1217,6 +1221,233 @@ bot.onText(/\/potential/, async (msg) => {
                     resultObject.data.forEach((data, index) => {
                         message += '<b>' + data.name + '</b>\n' + "Epic: " + data.epic + '\n' + "Unique: " + data.unique + '\n' + "Legend: " + data.legend + '\n\n';
                     });
+
+                    // update message
+                   await bot.editMessageText(message, {
+                        chat_id: chatId,
+                        message_id: messageId,
+                        reply_markup: {
+                            inline_keyboard: opt,
+                        },
+                        parse_mode: 'HTML'
+                    });
+                } else {
+                    let message = 'Woopsie! Something went wrong. Please try again later.';
+
+                    bot.editMessageText(message, {
+                        chat_id: chatId,
+                        message_id: messageId,
+                        reply_markup: {
+                            inline_keyboard: opt,
+                        },
+                        parse_mode: 'HTML'
+                    });
+                }
+            }
+        });
+    });
+});
+
+// SOUL
+// bot.onText(/\/magsoul/, async (msg) => {
+//     bot.removeListener("callback_query");
+
+//     const opt = [
+//         [{
+//                 text: 'Zakum',
+//                 callback_data: 1
+//             },
+//             {
+//                 text: 'Pink Bean',
+//                 callback_data: 2
+//             },
+//             {
+//                 text: 'Cygnus',
+//                 callback_data: 3
+//             }
+//         ],
+//         [
+//             {
+//                 text: 'Vonbon',
+//                 callback_data: 4
+//             },
+//             {
+//                 text: 'Pierre',
+//                 callback_data: 5
+//             },
+//             {
+//                 text: 'Crinsom Queen',
+//                 callback_data: 6
+//             }
+//         ],
+//         [
+//             {
+//                 text: 'Vellum',
+//                 callback_data: 7
+//             },
+//             {
+//                 text: 'Von Leon',
+//                 callback_data: 8
+//             },
+//             {
+//                 text: 'Hilla',
+//                 callback_data: 9
+//             }
+//         ],
+//         [
+//             {
+//                 text: 'Magnus',
+//                 callback_data: 7
+//             },
+//             {
+//                 text: 'Arkarium',
+//                 callback_data: 8
+//             }
+//         ]
+//     ];
+
+//     bot.sendMessage(msg.chat.id, "Select an option", {
+//         reply_markup: {
+//             inline_keyboard: opt,
+//         }
+//     });
+
+//     await bot.on('callback_query', (callbackQuery) => {
+//         const chatId = callbackQuery.message.chat.id;
+//         const messageId = callbackQuery.message.message_id;
+//         const data = callbackQuery.data;
+        
+//         magSoulModel.findOne({
+//             uid: data
+//         }, async (err, result) => {
+//             if (err) {
+//                 console.log(err);
+//             } else {
+//                 if (result) {
+//                     // console.log(result);
+
+//                     // convert result to object
+//                     const resultObject = JSON.parse(JSON.stringify(result));
+//                     // console.log(resultObject.jewel);
+
+//                     // loop through result object
+//                     let message = `${result.name} Mag Description \n\n`;
+
+//                     resultObject.data.forEach((data, index) => {
+//                         message += '<b>' + data.name + '</b>\n' +data.description+ '\n\n';
+//                     });
+
+//                     console.log(message);
+
+//                     // update message
+//                    await bot.editMessageText(message, {
+//                         chat_id: chatId,
+//                         message_id: messageId,
+//                         reply_markup: {
+//                             inline_keyboard: opt,
+//                         },
+//                         parse_mode: 'HTML'
+//                     });
+//                 } else {
+//                     let message = 'Woopsie! Something went wrong. Please try again later.';
+
+//                     bot.editMessageText(message, {
+//                         chat_id: chatId,
+//                         message_id: messageId,
+//                         reply_markup: {
+//                             inline_keyboard: opt,
+//                         },
+//                         parse_mode: 'HTML'
+//                     });
+//                 }
+//             }
+//         });
+//     });
+// });
+
+// SOUL OPTIONS
+bot.onText(/\/soul/, async (msg) => {
+    bot.removeListener("callback_query");
+
+    const opt = [
+        [{
+                text: 'Beefy',
+                callback_data: 1
+            },
+            {
+                text: 'Swift',
+                callback_data: 2
+            },
+            {
+                text: 'Clever',
+                callback_data: 3
+            }
+        ],
+        [
+            {
+                text: 'Lucky',
+                callback_data: 4
+            },
+            {
+                text: 'Flashy',
+                callback_data: 5
+            },
+            {
+                text: 'Potent',
+                callback_data: 6
+            }
+        ],
+        [
+            {
+                text: 'Radiant',
+                callback_data: 7
+            },
+            {
+                text: 'Hearty',
+                callback_data: 8
+            },
+            {
+                text: 'Magnificent',
+                callback_data: 9
+            }
+        ]
+    ];
+
+    bot.sendMessage(msg.chat.id, "Select an option", {
+        reply_markup: {
+            inline_keyboard: opt,
+        }
+    });
+
+    await bot.on('callback_query', (callbackQuery) => {
+        const chatId = callbackQuery.message.chat.id;
+        const messageId = callbackQuery.message.message_id;
+        const data = callbackQuery.data;
+        
+        soulModel.findOne({
+            uid: data
+        }, async (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                if (result) {
+                    // console.log(result);
+
+                    // convert result to object
+                    const resultObject = JSON.parse(JSON.stringify(result));
+                    // console.log(resultObject.jewel);
+
+                    // loop through result object
+                    let message = `Soul for : ${result.name} \n\n`;
+
+                    resultObject.data.forEach((data, index) => {
+                        // add new line after every comma for data.stats
+                        let stats = data.stats.replace(/,/g,'\n');
+
+                        message += '<b>' + data.name + '</b>\n' +stats+ '\n\n';
+                    });
+
+                    console.log(message);
 
                     // update message
                    await bot.editMessageText(message, {
