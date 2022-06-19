@@ -30,6 +30,8 @@ const flameModel = require('./models/flames_model');
 const potentialModel = require('./models/potentials_model');
 const magSoulModel = require('./models/mag_soul_model');
 const soulModel = require('./models/soul_model');
+const emblemSwModel = require('./models/emblem_sw_model');
+const guildActivityModel = require('./models/guild_activity_model');
 
 //-----------------------------------------
 // ROUTERS
@@ -48,6 +50,8 @@ app.use('/flames', require('./routes/flames_api'));
 app.use('/potential', require('./routes/potential_api'));
 app.use('/soul', require('./routes/soul_api'));
 app.use('/mag_soul', require('./routes/mag_soul_api'));
+app.use('/emblem_sw', require('./routes/emblem_sw'));
+app.use('/guild_activity', require('./routes/guild_activity'));
 
 app.use(express.json());
 app.use(router);
@@ -1249,121 +1253,121 @@ bot.onText(/\/potential/, async (msg) => {
 });
 
 // SOUL
-// bot.onText(/\/magsoul/, async (msg) => {
-//     bot.removeListener("callback_query");
+bot.onText(/\/magsoul/, async (msg) => {
+    bot.removeListener("callback_query");
 
-//     const opt = [
-//         [{
-//                 text: 'Zakum',
-//                 callback_data: 1
-//             },
-//             {
-//                 text: 'Pink Bean',
-//                 callback_data: 2
-//             },
-//             {
-//                 text: 'Cygnus',
-//                 callback_data: 3
-//             }
-//         ],
-//         [
-//             {
-//                 text: 'Vonbon',
-//                 callback_data: 4
-//             },
-//             {
-//                 text: 'Pierre',
-//                 callback_data: 5
-//             },
-//             {
-//                 text: 'Crinsom Queen',
-//                 callback_data: 6
-//             }
-//         ],
-//         [
-//             {
-//                 text: 'Vellum',
-//                 callback_data: 7
-//             },
-//             {
-//                 text: 'Von Leon',
-//                 callback_data: 8
-//             },
-//             {
-//                 text: 'Hilla',
-//                 callback_data: 9
-//             }
-//         ],
-//         [
-//             {
-//                 text: 'Magnus',
-//                 callback_data: 7
-//             },
-//             {
-//                 text: 'Arkarium',
-//                 callback_data: 8
-//             }
-//         ]
-//     ];
+    const opt = [
+        [{
+                text: 'Zakum',
+                callback_data: 1
+            },
+            {
+                text: 'Pink Bean',
+                callback_data: 2
+            },
+            {
+                text: 'Cygnus',
+                callback_data: 3
+            }
+        ],
+        [
+            {
+                text: 'Vonbon',
+                callback_data: 4
+            },
+            {
+                text: 'Pierre',
+                callback_data: 5
+            },
+            {
+                text: 'Crinsom Queen',
+                callback_data: 6
+            }
+        ],
+        [
+            {
+                text: 'Vellum',
+                callback_data: 7
+            },
+            {
+                text: 'Von Leon',
+                callback_data: 8
+            },
+            {
+                text: 'Hilla',
+                callback_data: 9
+            }
+        ],
+        [
+            {
+                text: 'Magnus',
+                callback_data: 7
+            },
+            {
+                text: 'Arkarium',
+                callback_data: 8
+            }
+        ]
+    ];
 
-//     bot.sendMessage(msg.chat.id, "Select an option", {
-//         reply_markup: {
-//             inline_keyboard: opt,
-//         }
-//     });
+    bot.sendMessage(msg.chat.id, "Select an option", {
+        reply_markup: {
+            inline_keyboard: opt,
+        }
+    });
 
-//     await bot.on('callback_query', (callbackQuery) => {
-//         const chatId = callbackQuery.message.chat.id;
-//         const messageId = callbackQuery.message.message_id;
-//         const data = callbackQuery.data;
+    await bot.on('callback_query', (callbackQuery) => {
+        const chatId = callbackQuery.message.chat.id;
+        const messageId = callbackQuery.message.message_id;
+        const data = callbackQuery.data;
         
-//         magSoulModel.findOne({
-//             uid: data
-//         }, async (err, result) => {
-//             if (err) {
-//                 console.log(err);
-//             } else {
-//                 if (result) {
-//                     // console.log(result);
+        magSoulModel.findOne({
+            uid: data
+        }, async (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                if (result) {
+                    // console.log(result);
 
-//                     // convert result to object
-//                     const resultObject = JSON.parse(JSON.stringify(result));
-//                     // console.log(resultObject.jewel);
+                    // convert result to object
+                    const resultObject = JSON.parse(JSON.stringify(result));
+                    // console.log(resultObject.jewel);
 
-//                     // loop through result object
-//                     let message = `${result.name} Mag Description \n\n`;
+                    // loop through result object
+                    let message = `${result.name} Mag Description \n\n`;
 
-//                     resultObject.data.forEach((data, index) => {
-//                         message += '<b>' + data.name + '</b>\n' +data.description+ '\n\n';
-//                     });
+                    resultObject.data.forEach((data, index) => {
+                        message += '<b>' + data.name + '</b>\n' +data.description+ '\n\n';
+                    });
 
-//                     console.log(message);
+                    console.log(message);
 
-//                     // update message
-//                    await bot.editMessageText(message, {
-//                         chat_id: chatId,
-//                         message_id: messageId,
-//                         reply_markup: {
-//                             inline_keyboard: opt,
-//                         },
-//                         parse_mode: 'HTML'
-//                     });
-//                 } else {
-//                     let message = 'Woopsie! Something went wrong. Please try again later.';
+                    // update message
+                   await bot.editMessageText(message, {
+                        chat_id: chatId,
+                        message_id: messageId,
+                        reply_markup: {
+                            inline_keyboard: opt,
+                        },
+                        parse_mode: 'HTML'
+                    });
+                } else {
+                    let message = 'Woopsie! Something went wrong. Please try again later.';
 
-//                     bot.editMessageText(message, {
-//                         chat_id: chatId,
-//                         message_id: messageId,
-//                         reply_markup: {
-//                             inline_keyboard: opt,
-//                         },
-//                         parse_mode: 'HTML'
-//                     });
-//                 }
-//             }
-//         });
-//     });
-// });
+                    bot.editMessageText(message, {
+                        chat_id: chatId,
+                        message_id: messageId,
+                        reply_markup: {
+                            inline_keyboard: opt,
+                        },
+                        parse_mode: 'HTML'
+                    });
+                }
+            }
+        });
+    });
+});
 
 // SOUL OPTIONS
 bot.onText(/\/soul/, async (msg) => {
@@ -1448,6 +1452,202 @@ bot.onText(/\/soul/, async (msg) => {
                     });
 
                     console.log(message);
+
+                    // update message
+                   await bot.editMessageText(message, {
+                        chat_id: chatId,
+                        message_id: messageId,
+                        reply_markup: {
+                            inline_keyboard: opt,
+                        },
+                        parse_mode: 'HTML'
+                    });
+                } else {
+                    let message = 'Woopsie! Something went wrong. Please try again later.';
+
+                    bot.editMessageText(message, {
+                        chat_id: chatId,
+                        message_id: messageId,
+                        reply_markup: {
+                            inline_keyboard: opt,
+                        },
+                        parse_mode: 'HTML'
+                    });
+                }
+            }
+        });
+    });
+});
+
+// SW EMBLEMS
+bot.onText(/\/emblem_sw/, async (msg) => {
+    bot.removeListener("callback_query");
+
+    const opt = [
+        [{
+                text: 'Domination',
+                callback_data: 1
+            },
+            {
+                text: 'Swift',
+                callback_data: 2
+            },
+            {
+                text: 'Ruthless',
+                callback_data: 3
+            }
+        ],
+        [
+            {
+                text: 'Powerful',
+                callback_data: 4
+            },
+            {
+                text: 'Sacred',
+                callback_data: 5
+            },
+            {
+                text: 'Destruction',
+                callback_data: 6
+            }
+        ],
+        [
+            {
+                text: 'Judgement',
+                callback_data: 7
+            },
+            {
+                text: 'Experience',
+                callback_data: 8
+            },
+            {
+                text: 'Patient',
+                callback_data: 9
+            }
+        ],
+        [
+            {
+                text: 'Cleverness',
+                callback_data: 10
+            },
+        ]
+    ];
+
+    bot.sendMessage(msg.chat.id, "Select an option", {
+        reply_markup: {
+            inline_keyboard: opt,
+        }
+    });
+
+    await bot.on('callback_query', (callbackQuery) => {
+        const chatId = callbackQuery.message.chat.id;
+        const messageId = callbackQuery.message.message_id;
+        const data = callbackQuery.data;
+        
+        emblemSwModel.findOne({
+            uid: data
+        }, async (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                if (result) {
+                    // console.log(result);
+
+                    let message = `<b>Secondary Emblem for : ${result.name} (${result.type}) </b>\n\n`;
+
+                    // loop through result.stats
+                    result.stats.forEach((data, index) => {
+                        message += '<b>Level ' +data.level+ '</b>\n';
+                        message += '<b>Stat</b> : ' +data.stats+ '%\n';
+                        message += '<b>Shards</b> : ' +data.shards+ '\n';
+                        message += '<b>Cost</b> : ' +data.cost+ '\n\n';
+                    });
+
+
+                    // update message
+                   await bot.editMessageText(message, {
+                        chat_id: chatId,
+                        message_id: messageId,
+                        reply_markup: {
+                            inline_keyboard: opt,
+                        },
+                        parse_mode: 'HTML'
+                    });
+                } else {
+                    let message = 'Woopsie! Something went wrong. Please try again later.';
+
+                    bot.editMessageText(message, {
+                        chat_id: chatId,
+                        message_id: messageId,
+                        reply_markup: {
+                            inline_keyboard: opt,
+                        },
+                        parse_mode: 'HTML'
+                    });
+                }
+            }
+        });
+    });
+});
+
+// GUILD ACTIVITY
+bot.onText(/\/guild_activity/, async (msg) => {
+    bot.removeListener("callback_query");
+
+    const opt = [
+        [{
+                text: 'Campfire',
+                callback_data: 1
+            },
+            {
+                text: 'Campfire Firewood Effect',
+                callback_data: 2
+            }
+        ],
+        [
+            {
+                text: 'Maple Tree',
+                callback_data: 3
+            },
+            {
+                text: 'Guild Accountant',
+                callback_data: 4
+            },
+            {
+                text: 'Guild Chef',
+                callback_data: 5
+            }
+        ]
+    ];
+
+    bot.sendMessage(msg.chat.id, "Select an option", {
+        reply_markup: {
+            inline_keyboard: opt,
+        }
+    });
+
+    await bot.on('callback_query', (callbackQuery) => {
+        const chatId = callbackQuery.message.chat.id;
+        const messageId = callbackQuery.message.message_id;
+        const data = callbackQuery.data;
+        
+        guildActivityModel.findOne({
+            uid: data
+        }, async (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                if (result) {
+                    // console.log(result);
+
+                    let message = `<b>Guild Activity : ${result.name} </b>\n\n` + result.description + '\n\n';
+
+                    // loop through result.stats
+                    result.stats.forEach((data, index) => {
+                        message += '<b>Level ' +data.level+ '</b>\n';
+                        message += '<b>Stat</b> : ' +data.stats+ '\n\n';
+                    });
+
 
                     // update message
                    await bot.editMessageText(message, {
