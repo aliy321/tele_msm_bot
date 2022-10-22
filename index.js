@@ -32,6 +32,7 @@ const magSoulModel = require('./models/mag_soul_model');
 const soulModel = require('./models/soul_model');
 const emblemSwModel = require('./models/emblem_sw_model');
 const guildActivityModel = require('./models/guild_activity_model');
+const bossModel = require('./models/boss_model');
 
 //-----------------------------------------
 // ROUTERS
@@ -52,6 +53,7 @@ app.use('/soul', require('./routes/soul_api'));
 app.use('/mag_soul', require('./routes/mag_soul_api'));
 app.use('/emblem_sw', require('./routes/emblem_sw'));
 app.use('/guild_activity', require('./routes/guild_activity'));
+app.use('/boss', require('./routes/boss_api'));
 
 app.use(express.json());
 app.use(router);
@@ -67,10 +69,10 @@ const dbname = process.env.MONGO_DBNAME;
 
 mongoose.connect(
     `mongodb+srv://${username}:${password}@${cluster}.mongodb.net/${dbname}?retryWrites=true&w=majority`, {
-        useNewUrlParser: true,
-        useFindAndModify: false,
-        useUnifiedTopology: true
-    }
+    useNewUrlParser: true,
+    useFindAndModify: false,
+    useUnifiedTopology: true
+}
 );
 
 const db = mongoose.connection;
@@ -167,10 +169,10 @@ bot.onText(/\/start/, (msg) => {
 bot.onText(/\/getUsers/, async (msg) => {
     const chatId = msg.chat.id;
     const checkAdmin = await bot.getChatMember(chatId, msg.from.id);
-    console.log(checkAdmin['user']['id']);
+    // console.log(checkAdmin['user']['id']);
 
     if (checkAdmin['user']['id'] == '371956752') {
-        console.log(checkAdmin);
+        // console.log(checkAdmin);
         const users = await userModel.find({});
 
         try {
@@ -317,8 +319,8 @@ bot.onText(/\/buff/, (msg) => {
     let data;
 
     imagesModel.find({
-            name: re
-        }, '')
+        name: re
+    }, '')
         .then(result => {
             // console.log(result);
 
@@ -353,8 +355,8 @@ bot.onText(/\/trio (.+)/, (msg, match) => {
     let i = 1;
 
     trioModel.find({
-            key: capture
-        })
+        key: capture
+    })
         .then(result => {
             // console.log(result);
             var message = '';
@@ -505,52 +507,52 @@ bot.onText(/\/patch/, (msg) => {
 // JEWEL
 bot.onText(/\/jewel/, async (msg) => {
     bot.removeListener("callback_query");
-    
+
     const opt = [
         [{
-                text: '🟥',
-                callback_data: 'Red Jewel'
-            },
-            {
-                text: '🟥🟥🟥🟥🟥',
-                callback_data: 'Red Jewel Set'
-            }
+            text: '🟥',
+            callback_data: 'Red Jewel'
+        },
+        {
+            text: '🟥🟥🟥🟥🟥',
+            callback_data: 'Red Jewel Set'
+        }
         ],
         [{
-                text: '🟦',
-                callback_data: 'Blue Jewel'
-            },
-            {
-                text: '🟦🟦🟦🟦🟦',
-                callback_data: 'Blue Jewel Set'
-            }
+            text: '🟦',
+            callback_data: 'Blue Jewel'
+        },
+        {
+            text: '🟦🟦🟦🟦🟦',
+            callback_data: 'Blue Jewel Set'
+        }
         ],
         [{
-                text: '🟩',
-                callback_data: 'Green Jewel'
-            },
-            {
-                text: '🟩🟩🟩🟩🟩',
-                callback_data: 'Green Jewel Set'
-            }
+            text: '🟩',
+            callback_data: 'Green Jewel'
+        },
+        {
+            text: '🟩🟩🟩🟩🟩',
+            callback_data: 'Green Jewel Set'
+        }
         ],
         [{
-                text: '🟨',
-                callback_data: 'Yellow Jewel'
-            },
-            {
-                text: '🟨🟨🟨🟨🟨',
-                callback_data: 'Yellow Jewel Set'
-            }
+            text: '🟨',
+            callback_data: 'Yellow Jewel'
+        },
+        {
+            text: '🟨🟨🟨🟨🟨',
+            callback_data: 'Yellow Jewel Set'
+        }
         ],
         [{
-                text: '🟪',
-                callback_data: 'Purple Jewel'
-            },
-            {
-                text: '🟪🟪🟪🟪🟪',
-                callback_data: 'Purple Jewel Set'
-            }
+            text: '🟪',
+            callback_data: 'Purple Jewel'
+        },
+        {
+            text: '🟪🟪🟪🟪🟪',
+            callback_data: 'Purple Jewel Set'
+        }
         ]
     ];
 
@@ -705,40 +707,40 @@ bot.onText(/\/pba/, async (msg) => {
 
     const opt = [
         [{
-                text: 'Necro',
-                callback_data: 'Necro'
-            },
-            {
-                text: 'Ancient',
-                callback_data: 'Ancient'
-            }
+            text: 'Necro',
+            callback_data: 'Necro'
+        },
+        {
+            text: 'Ancient',
+            callback_data: 'Ancient'
+        }
         ],
         [{
-                text: 'Mythic',
-                callback_data: 'Mythic'
-            },
-            {
-                text: 'Legend',
-                callback_data: 'Legend'
-            }
+            text: 'Mythic',
+            callback_data: 'Mythic'
+        },
+        {
+            text: 'Legend',
+            callback_data: 'Legend'
+        }
         ],
         [{
-                text: 'Unique',
-                callback_data: 'Unique'
-            },
-            {
-                text: 'Epic',
-                callback_data: 'Epic'
-            }
+            text: 'Unique',
+            callback_data: 'Unique'
+        },
+        {
+            text: 'Epic',
+            callback_data: 'Epic'
+        }
         ],
         [{
-                text: 'Rare',
-                callback_data: 'Rare'
-            },
-            {
-                text: 'Normal',
-                callback_data: 'Normal'
-            }
+            text: 'Rare',
+            callback_data: 'Rare'
+        },
+        {
+            text: 'Normal',
+            callback_data: 'Normal'
+        }
         ]
     ];
 
@@ -806,35 +808,35 @@ bot.onText(/\/linkskill/, async (msg) => {
 
     const opt = [
         [{
-                text: 'Invincible Belief',
-                callback_data: 3
-            },
-            {
-                text: 'Pirate Blessing',
-                callback_data: 7
-            },
-            {
-                text: 'Empirical Knowledge',
-                callback_data: 6
-            },
+            text: 'Invincible Belief',
+            callback_data: 3
+        },
+        {
+            text: 'Pirate Blessing',
+            callback_data: 7
+        },
+        {
+            text: 'Empirical Knowledge',
+            callback_data: 6
+        },
         ],
         [{
-                text: 'Thief Cunning',
-                callback_data: 8
-            },
-            {
-                text: 'Adventurer Blessing',
-                callback_data: 4
-            },
-            {
-                text: 'Spirit of Freedom',
-                callback_data: 5
-            }
+            text: 'Thief Cunning',
+            callback_data: 8
+        },
+        {
+            text: 'Adventurer Blessing',
+            callback_data: 4
+        },
+        {
+            text: 'Spirit of Freedom',
+            callback_data: 5
+        }
         ],
         [{
-                text: 'Cygnus Blessing',
-                callback_data: 9
-            },
+            text: 'Cygnus Blessing',
+            callback_data: 9
+        },
             // {
             //     text: '',
             //     callback_data: ''
@@ -845,17 +847,17 @@ bot.onText(/\/linkskill/, async (msg) => {
             // }
         ],
         [{
-                text: 'Offsensive Stats',
-                callback_data: 0
-            },
-            {
-                text: 'Defensive Stats',
-                callback_data: 1
-            },
-            {
-                text: 'Training Stats',
-                callback_data: 2
-            }
+            text: 'Offsensive Stats',
+            callback_data: 0
+        },
+        {
+            text: 'Defensive Stats',
+            callback_data: 1
+        },
+        {
+            text: 'Training Stats',
+            callback_data: 2
+        }
         ]
     ];
 
@@ -924,69 +926,69 @@ bot.onText(/\/hyper/, async (msg) => {
 
     const opt = [
         [{
-                text: 'Final Dmg %',
-                callback_data: 0
-            },
-            {
-                text: 'Max Dmg Inc',
-                callback_data: 1
-            },
-            {
-                text: 'Phy Dmg %',
-                callback_data: 2
-            },
+            text: 'Final Dmg %',
+            callback_data: 0
+        },
+        {
+            text: 'Max Dmg Inc',
+            callback_data: 1
+        },
+        {
+            text: 'Phy Dmg %',
+            callback_data: 2
+        },
         ],
         [{
-                text: 'Mag Dmg %',
-                callback_data: 3
-            },
-            {
-                text: 'Crit Rate %',
-                callback_data: 4
-            },
-            {
-                text: 'Crit Dmg %',
-                callback_data: 5
-            }
+            text: 'Mag Dmg %',
+            callback_data: 3
+        },
+        {
+            text: 'Crit Rate %',
+            callback_data: 4
+        },
+        {
+            text: 'Crit Dmg %',
+            callback_data: 5
+        }
         ],
         [{
-                text: 'Boss Atk %',
-                callback_data: 6
-            },
-            {
-                text: 'Exp %',
-                callback_data: 7
-            },
-            {
-                text: 'SF Inc',
-                callback_data: 8
-            }
+            text: 'Boss Atk %',
+            callback_data: 6
+        },
+        {
+            text: 'Exp %',
+            callback_data: 7
+        },
+        {
+            text: 'SF Inc',
+            callback_data: 8
+        }
         ],
         [{
-                text: 'Party Exp %',
-                callback_data: 9
-            },
-            {
-                text: 'KBK',
-                callback_data: 10
-            },
-            {
-                text: 'Fever Duration Inc',
-                callback_data: 11
-            }
+            text: 'Party Exp %',
+            callback_data: 9
+        },
+        {
+            text: 'KBK',
+            callback_data: 10
+        },
+        {
+            text: 'Fever Duration Inc',
+            callback_data: 11
+        }
         ],
         [{
-                text: 'Item Buff Duration Inc',
-                callback_data: 12
-            },
-            {
-                text: 'Chance for Add. Dmg %',
-                callback_data: 13
-            },
-            {
-                text: 'Atk Ignore Rate %',
-                callback_data: 14
-            }
+            text: 'Item Buff Duration Inc',
+            callback_data: 12
+        },
+        {
+            text: 'Chance for Add. Dmg %',
+            callback_data: 13
+        },
+        {
+            text: 'Atk Ignore Rate %',
+            callback_data: 14
+        }
         ]
     ];
 
@@ -1056,22 +1058,22 @@ bot.onText(/\/flames/, async (msg) => {
 
     const opt = [
         [{
-                text: 'Epic',
-                callback_data: 0
-            },
-            {
-                text: 'Unique',
-                callback_data: 1
-            },
+            text: 'Epic',
+            callback_data: 0
+        },
+        {
+            text: 'Unique',
+            callback_data: 1
+        },
         ],
         [{
-                text: 'Legend',
-                callback_data: 2
-            },
-            {
-                text: 'Mythic',
-                callback_data: 3
-            },
+            text: 'Legend',
+            callback_data: 2
+        },
+        {
+            text: 'Mythic',
+            callback_data: 3
+        },
         ]
     ];
 
@@ -1139,59 +1141,59 @@ bot.onText(/\/potential/, async (msg) => {
 
     const opt = [
         [{
-                text: 'Weapon',
-                callback_data: 0
-            },
-            {
-                text: 'Hat',
-                callback_data: 1
-            },
-            {
-                text: 'Outfit',
-                callback_data: 2
-            },
-            {
-                text: 'Gloves',
-                callback_data: 3
-            },
+            text: 'Weapon',
+            callback_data: 0
+        },
+        {
+            text: 'Hat',
+            callback_data: 1
+        },
+        {
+            text: 'Outfit',
+            callback_data: 2
+        },
+        {
+            text: 'Gloves',
+            callback_data: 3
+        },
         ],
         [{
-                text: 'Shoes',
-                callback_data: 4
-            },
-            {
-                text: 'Shoulder',
-                callback_data: 5
-            },
-            {
-                text: 'Belt',
-                callback_data: 6
-            },
-            {
-                text: 'Cape',
-                callback_data: 7
-            },
+            text: 'Shoes',
+            callback_data: 4
+        },
+        {
+            text: 'Shoulder',
+            callback_data: 5
+        },
+        {
+            text: 'Belt',
+            callback_data: 6
+        },
+        {
+            text: 'Cape',
+            callback_data: 7
+        },
         ],
         [{
-                text: 'Earing',
-                callback_data: 8
-            },
-            {
-                text: 'Necklace',
-                callback_data: 9
-            },
-            {
-                text: 'Ring',
-                callback_data: 10
-            },
-            {
-                text: 'Hearts',
-                callback_data: 11
-            },
-            {
-                text: 'Pocket',
-                callback_data: 12
-            },
+            text: 'Earing',
+            callback_data: 8
+        },
+        {
+            text: 'Necklace',
+            callback_data: 9
+        },
+        {
+            text: 'Ring',
+            callback_data: 10
+        },
+        {
+            text: 'Hearts',
+            callback_data: 11
+        },
+        {
+            text: 'Pocket',
+            callback_data: 12
+        },
         ]
     ];
 
@@ -1205,7 +1207,7 @@ bot.onText(/\/potential/, async (msg) => {
         const chatId = callbackQuery.message.chat.id;
         const messageId = callbackQuery.message.message_id;
         const data = callbackQuery.data;
-        
+
         potentialModel.findOne({
             uid: data
         }, async (err, result) => {
@@ -1227,7 +1229,7 @@ bot.onText(/\/potential/, async (msg) => {
                     });
 
                     // update message
-                   await bot.editMessageText(message, {
+                    await bot.editMessageText(message, {
                         chat_id: chatId,
                         message_id: messageId,
                         reply_markup: {
@@ -1258,17 +1260,17 @@ bot.onText(/\/magsoul/, async (msg) => {
 
     const opt = [
         [{
-                text: 'Zakum',
-                callback_data: 1
-            },
-            {
-                text: 'Pink Bean',
-                callback_data: 2
-            },
-            {
-                text: 'Cygnus',
-                callback_data: 3
-            }
+            text: 'Zakum',
+            callback_data: 1
+        },
+        {
+            text: 'Pink Bean',
+            callback_data: 2
+        },
+        {
+            text: 'Cygnus',
+            callback_data: 3
+        }
         ],
         [
             {
@@ -1320,7 +1322,7 @@ bot.onText(/\/magsoul/, async (msg) => {
         const chatId = callbackQuery.message.chat.id;
         const messageId = callbackQuery.message.message_id;
         const data = callbackQuery.data;
-        
+
         magSoulModel.findOne({
             uid: data
         }, async (err, result) => {
@@ -1338,13 +1340,13 @@ bot.onText(/\/magsoul/, async (msg) => {
                     let message = `${result.name} Mag Description \n\n`;
 
                     resultObject.data.forEach((data, index) => {
-                        message += '<b>' + data.name + '</b>\n' +data.description+ '\n\n';
+                        message += '<b>' + data.name + '</b>\n' + data.description + '\n\n';
                     });
 
                     console.log(message);
 
                     // update message
-                   await bot.editMessageText(message, {
+                    await bot.editMessageText(message, {
                         chat_id: chatId,
                         message_id: messageId,
                         reply_markup: {
@@ -1375,17 +1377,17 @@ bot.onText(/\/soul/, async (msg) => {
 
     const opt = [
         [{
-                text: 'Beefy',
-                callback_data: 1
-            },
-            {
-                text: 'Swift',
-                callback_data: 2
-            },
-            {
-                text: 'Clever',
-                callback_data: 3
-            }
+            text: 'Beefy',
+            callback_data: 1
+        },
+        {
+            text: 'Swift',
+            callback_data: 2
+        },
+        {
+            text: 'Clever',
+            callback_data: 3
+        }
         ],
         [
             {
@@ -1427,7 +1429,7 @@ bot.onText(/\/soul/, async (msg) => {
         const chatId = callbackQuery.message.chat.id;
         const messageId = callbackQuery.message.message_id;
         const data = callbackQuery.data;
-        
+
         soulModel.findOne({
             uid: data
         }, async (err, result) => {
@@ -1446,15 +1448,15 @@ bot.onText(/\/soul/, async (msg) => {
 
                     resultObject.data.forEach((data, index) => {
                         // add new line after every comma for data.stats
-                        let stats = data.stats.replace(/,/g,'\n');
+                        let stats = data.stats.replace(/,/g, '\n');
 
-                        message += '<b>' + data.name + '</b>\n' +stats+ '\n\n';
+                        message += '<b>' + data.name + '</b>\n' + stats + '\n\n';
                     });
 
                     console.log(message);
 
                     // update message
-                   await bot.editMessageText(message, {
+                    await bot.editMessageText(message, {
                         chat_id: chatId,
                         message_id: messageId,
                         reply_markup: {
@@ -1485,17 +1487,17 @@ bot.onText(/\/emblem_sw/, async (msg) => {
 
     const opt = [
         [{
-                text: 'Domination',
-                callback_data: 1
-            },
-            {
-                text: 'Swift',
-                callback_data: 2
-            },
-            {
-                text: 'Ruthless',
-                callback_data: 3
-            }
+            text: 'Domination',
+            callback_data: 1
+        },
+        {
+            text: 'Swift',
+            callback_data: 2
+        },
+        {
+            text: 'Ruthless',
+            callback_data: 3
+        }
         ],
         [
             {
@@ -1543,7 +1545,7 @@ bot.onText(/\/emblem_sw/, async (msg) => {
         const chatId = callbackQuery.message.chat.id;
         const messageId = callbackQuery.message.message_id;
         const data = callbackQuery.data;
-        
+
         emblemSwModel.findOne({
             uid: data
         }, async (err, result) => {
@@ -1557,15 +1559,15 @@ bot.onText(/\/emblem_sw/, async (msg) => {
 
                     // loop through result.stats
                     result.stats.forEach((data, index) => {
-                        message += '<b>Level ' +data.level+ '</b>\n';
-                        message += '<b>Stat</b> : ' +data.stats+ '%\n';
-                        message += '<b>Shards</b> : ' +data.shards+ '\n';
-                        message += '<b>Cost</b> : ' +data.cost+ '\n\n';
+                        message += '<b>Level ' + data.level + '</b>\n';
+                        message += '<b>Stat</b> : ' + data.stats + '%\n';
+                        message += '<b>Shards</b> : ' + data.shards + '\n';
+                        message += '<b>Cost</b> : ' + data.cost + '\n\n';
                     });
 
 
                     // update message
-                   await bot.editMessageText(message, {
+                    await bot.editMessageText(message, {
                         chat_id: chatId,
                         message_id: messageId,
                         reply_markup: {
@@ -1596,13 +1598,13 @@ bot.onText(/\/guild_activity/, async (msg) => {
 
     const opt = [
         [{
-                text: 'Campfire',
-                callback_data: 1
-            },
-            {
-                text: 'Campfire Firewood Effect',
-                callback_data: 2
-            }
+            text: 'Campfire',
+            callback_data: 1
+        },
+        {
+            text: 'Campfire Firewood Effect',
+            callback_data: 2
+        }
         ],
         [
             {
@@ -1630,7 +1632,7 @@ bot.onText(/\/guild_activity/, async (msg) => {
         const chatId = callbackQuery.message.chat.id;
         const messageId = callbackQuery.message.message_id;
         const data = callbackQuery.data;
-        
+
         guildActivityModel.findOne({
             uid: data
         }, async (err, result) => {
@@ -1644,13 +1646,101 @@ bot.onText(/\/guild_activity/, async (msg) => {
 
                     // loop through result.stats
                     result.stats.forEach((data, index) => {
-                        message += '<b>Level ' +data.level+ '</b>\n';
-                        message += '<b>Stat</b> : ' +data.stats+ '\n\n';
+                        message += '<b>Level ' + data.level + '</b>\n';
+                        message += '<b>Stat</b> : ' + data.stats + '\n\n';
                     });
 
 
                     // update message
-                   await bot.editMessageText(message, {
+                    await bot.editMessageText(message, {
+                        chat_id: chatId,
+                        message_id: messageId,
+                        reply_markup: {
+                            inline_keyboard: opt,
+                        },
+                        parse_mode: 'HTML'
+                    });
+                } else {
+                    let message = 'Woopsie! Something went wrong. Please try again later.';
+
+                    bot.editMessageText(message, {
+                        chat_id: chatId,
+                        message_id: messageId,
+                        reply_markup: {
+                            inline_keyboard: opt,
+                        },
+                        parse_mode: 'HTML'
+                    });
+                }
+            }
+        });
+    });
+});
+
+// BOSS
+bot.onText(/\/bosses/, async (msg) => {
+    console.log('bosses');
+    bot.removeListener("callback_query");
+
+    const opt = [
+        [
+            {
+                text: 'Von Leon',
+                callback_data: 1
+            },
+            {
+                text: 'Hilla',
+                callback_data: 2
+            },
+            {
+                text: 'Magnus',
+                callback_data: 3
+            },
+        ],
+        [
+            {
+                text: 'Arkarium',
+                callback_data: 4
+            },
+            {
+                text: 'Lotus',
+                callback_data: 5
+            }
+        ]
+    ];
+
+    bot.sendMessage(msg.chat.id, "Select an option", {
+        reply_markup: {
+            inline_keyboard: opt,
+        }
+    });
+
+    await bot.on('callback_query', (callbackQuery) => {
+        const chatId = callbackQuery.message.chat.id;
+        const messageId = callbackQuery.message.message_id;
+        const data = callbackQuery.data;
+
+        bossModel.findOne({
+            uid: data
+        }, async (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                if (result) {
+                    console.log(result.stats[0].image);
+
+                    let message = '';
+                    message += `<a href="${result.stats[0].image}">${result.name}</a>\n\n`;
+
+                    // loop through result.stats
+                    result.stats.forEach((data, index, result) => {
+                        message += '<b>HP</b> ' + new Intl.NumberFormat().format(data.hp) + '\n';
+                        message += data.def ? '<b>DEF</b> ' + data.def + '%\n' : '';
+                        message += '<b>CRIT RES</b> : ' + data.critres + '%\n\n';
+                    });
+
+                    // update message
+                    await bot.editMessageText(message, {
                         chat_id: chatId,
                         message_id: messageId,
                         reply_markup: {
