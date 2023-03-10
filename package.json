@@ -18,7 +18,7 @@
     "mongoose": "^5.13.7",
     "nedb": "^1.8.0",
     "node-telegram-bot-api": "^0.54.0",
-    "nodemon": "^2.0.16",
+    "nodemon": "^2.0.21",
     "puppeteer": "^10.2.0",
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
