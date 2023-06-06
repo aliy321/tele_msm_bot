@@ -22,6 +22,6 @@
     "puppeteer": "^10.2.0",
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
-    "rss-to-json": "^2.0.2"
+    "rss-to-json": "^2.1.1"
   }
 }
